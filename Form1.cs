@@ -25,7 +25,8 @@ namespace NotePad_Metro
         private void Form1_Load(object sender, EventArgs e)
         {
             t = new Test(NrichTextBox);
-            Logical.TokenGenerator.InitBox(this.NrichTextBox);
+            TokenGenerator.InitBox(NrichTextBox);
+            Highlighter.Init(NrichTextBox);
             SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
         }
 
@@ -150,7 +151,7 @@ namespace NotePad_Metro
                     Line line = new Line();
                     line.lineNumber = (NrichTextBox.Lines.Length - 1);
                     line.text = NrichTextBox.Lines[NrichTextBox.Lines.Length - 2];
-
+                  
                     if (TokenGenerator.IsVariableDecleration(line.text))
                     {
                         line.type = "variable";
@@ -230,8 +231,6 @@ namespace NotePad_Metro
             }
         }
 
-
-
         private void generateDocumentationToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -266,10 +265,20 @@ namespace NotePad_Metro
 
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
-            TokenGenerator.MarkClass();
-            TokenGenerator.MarkAccessModifiers();
-            TokenGenerator.MarkDatatypes();
-            this.SuggestionPosition();
+            //TokenGenerator.MarkClass();
+            //TokenGenerator.MarkAccessModifiers();
+            //TokenGenerator.MarkDatatypes();
+            try
+            {
+                string[] words = NrichTextBox.Text.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                Highlighter.Highlight(words[words.Length - 1]);
+            }
+            catch (Exception)
+            {
+
+            }
+            
+            SuggestionPosition();
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)

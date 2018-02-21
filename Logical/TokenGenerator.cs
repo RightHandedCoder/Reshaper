@@ -6,13 +6,6 @@ namespace NotePad_Metro.Logical
 {
     class TokenGenerator
     {
-        private readonly static string pattern_DataTypes = @"(\bs?byte\b|\bu?short\b|\bu?int\b|\bu?long\b|\bfloat\b|\bdouble\b|\bdecimal\b|\bchar\b|\bstring\b|\bbool\b|\bobject\b|\bvar\b)";
-        private readonly static string pattern_AccessModifiers = @"(\bprivate\b|\bpublic\b|\bprotected\b|\binternal\b|\bprotected\b\s\binternal\b)";
-        private readonly static string pattern_ReturnTypes = @"(\bs?byte\b|\bu?short\b|\bu?int\b|\bu?long\b|\bfloat\b|\bdouble\b|\bdecimal\b|\bchar\b|\bstring\b|\bbool\b|\bobject\b|\bvoid\b)";
-        private readonly static string pattern_MethodDecleration = @"((private|public|protected|internal|protected\sinternal)*?\s*?(\bs?byte\b|\bu?short\b|\bu?int\b|\bu?long\b|\bfloat\b|\bdouble\b|\bdecimal\b|\bchar\b|\bstring\b|\bbool\b|\bobject\b|\bvoid\b)(\s*?)(\w)(\s*?)(\w*?))";
-        private readonly static string pattern_VariableDecleration = @"((private|public|protected|internal|protected\sinternal)*?\s*?(\bs?byte\b|\bu?short\b|\bu?int\b|\bu?long\b|\bfloat\b|\bdouble\b|\bdecimal\b|\bchar\b|\bstring\b|\bbool\b|\bobject\b|\bvar\b)\s+\b\w+\b\s*?)(;|=\s*?\d*;)";
-        private readonly static string pattern_ClassDecleration = @"((private|public|protected|internal|protected\sinternal)*?\s*?[class])";
-
         private static RichTextBox box;
 
         public static void InitBox(RichTextBox box)
@@ -22,9 +15,46 @@ namespace NotePad_Metro.Logical
             return;
         }
 
+        public static string GenerateToken(string text)
+        {
+            Match matchDataType = Regex.Match(text, Tokens.pattern_DataTypes);
+            Match matchAccessModifier = Regex.Match(text, Tokens.pattern_AccessModifiers);
+            Match matchReturnType = Regex.Match(text, Tokens.pattern_ReturnTypes);
+            Match matchClassTypes = Regex.Match(text, Tokens.pattern_ClassTypes);
+            Match matchMethodDecleration = Regex.Match(text, Tokens.pattern_MethodDecleration);
+            Match matchVariableDecleration = Regex.Match(text, Tokens.pattern_VariableDecleration);
+
+            if (matchDataType.Success)
+            {
+                return "dataType";
+            }
+            else if (matchAccessModifier.Success)
+            {
+                return "accessModifier";
+            }
+            else if (matchReturnType.Success)
+            {
+                return "returnType";
+            }
+            else if (matchMethodDecleration.Success)
+            {
+                return "methodDecleration";
+            }
+            else if (matchVariableDecleration.Success)
+            {
+                return "variableDecleration";
+            }
+            else if (matchClassTypes.Success)
+            {
+                return "classType";
+            }
+            else
+                return null;
+        }
+
         public static void MarkDatatypes()
         {
-            MatchCollection match = Regex.Matches(box.Text, pattern_DataTypes);
+            MatchCollection match = Regex.Matches(box.Text, Tokens.pattern_DataTypes);
 
             foreach (Match m in match)
             {
@@ -42,7 +72,7 @@ namespace NotePad_Metro.Logical
 
         public static void MarkAccessModifiers()
         {
-            MatchCollection match = Regex.Matches(box.Text, pattern_AccessModifiers);
+            MatchCollection match = Regex.Matches(box.Text, Tokens.pattern_AccessModifiers);
 
             foreach (Match m in match)
             {
@@ -60,7 +90,7 @@ namespace NotePad_Metro.Logical
 
         public static void MarkReturnTypes()
         {
-            MatchCollection match = Regex.Matches(box.Text, pattern_ReturnTypes);
+            MatchCollection match = Regex.Matches(box.Text, Tokens.pattern_ReturnTypes);
 
             foreach (Match m in match)
             {
@@ -97,7 +127,7 @@ namespace NotePad_Metro.Logical
 
         public static bool IsAccessModifier(string word)
         {
-            Match match = Regex.Match(word, pattern_AccessModifiers);
+            Match match = Regex.Match(word, Tokens.pattern_AccessModifiers);
 
             if (match.Success)
             {
@@ -109,7 +139,7 @@ namespace NotePad_Metro.Logical
 
         public static bool IsDataType(string word)
         {
-            Match match = Regex.Match(word, pattern_DataTypes);
+            Match match = Regex.Match(word, Tokens.pattern_DataTypes);
 
             if (match.Success)
             {
@@ -121,7 +151,7 @@ namespace NotePad_Metro.Logical
 
         public static bool IsReturnType(string word)
         {
-            Match match = Regex.Match(word, pattern_ReturnTypes);
+            Match match = Regex.Match(word, Tokens.pattern_ReturnTypes);
 
             if (match.Success)
             {
@@ -135,7 +165,7 @@ namespace NotePad_Metro.Logical
         {
             if (line != null)
             {
-                Match match = Regex.Match(line, pattern_VariableDecleration);
+                Match match = Regex.Match(line, Tokens.pattern_VariableDecleration);
 
                 if (match.Success)
                 {
@@ -154,7 +184,7 @@ namespace NotePad_Metro.Logical
         {
             if (line != null)
             {
-                Match match = Regex.Match(line, pattern_MethodDecleration);
+                Match match = Regex.Match(line, Tokens.pattern_MethodDecleration);
 
                 if (match.Success)
                 {
@@ -173,7 +203,7 @@ namespace NotePad_Metro.Logical
         {
             if (line != null)
             {
-                Match match = Regex.Match(line, pattern_ClassDecleration);
+                Match match = Regex.Match(line, Tokens.pattern_ClassTypes);
 
                 if (match.Success)
                 {

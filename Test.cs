@@ -10,7 +10,6 @@ namespace NotePad_Metro
 {
     class Test
     {
-        string abcd;
         private RichTextBox box;
         private List<string> arrayList;
         private bool AccessModifier, ReturnType, DataType;
