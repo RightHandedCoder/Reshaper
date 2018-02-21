@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorList.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -51,8 +52,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Highlighter.cs" />
+    <Compile Include="KeyEventsHandler.cs" />
     <Compile Include="Library\Lib_C_Sharp.cs" />
-    <Compile Include="Logical\Line.cs" />
+    <Compile Include="LineCollection.cs" />
+    <Compile Include="Logical\LogicalStructs.cs" />
     <Compile Include="Logical\SuggestionProvider.cs" />
     <Compile Include="Logical\TokenGenerator.cs" />
     <Compile Include="Program.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="SuggestionHelper.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Tokens.cs" />
+    <Compile Include="Utility.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

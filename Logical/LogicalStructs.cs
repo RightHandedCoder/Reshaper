@@ -12,4 +12,10 @@ namespace NotePad_Metro.Logical
         public string text;
         public string type;
     }
+
+    struct Error
+    {
+        public int lineNumber;
+        public string errorType;
+    }
 }

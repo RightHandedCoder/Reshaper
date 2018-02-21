@@ -44,27 +44,5 @@ namespace NotePad_Metro
 
             return color;
         }
-
-        public static void Highlight(string text)
-        {
-            Color color = TextColor(text);
-
-            try
-            {
-                editor.Focus();
-                int startIndex = editor.Text.LastIndexOf(' ') == -1 ? 0 : editor.Text.LastIndexOf(' ');
-                int selectionLength = editor.SelectionStart;
-
-                editor.SelectionStart = startIndex;
-                editor.SelectionLength = selectionLength;
-                editor.SelectionColor = color;
-                editor.SelectionStart = editor.TextLength;
-                editor.SelectionColor = Color.Black;
-            }
-            catch (Exception)
-            {
-
-            }
-        }
     }
 }

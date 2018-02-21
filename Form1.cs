@@ -25,6 +25,8 @@ namespace NotePad_Metro
         private void Form1_Load(object sender, EventArgs e)
         {
             t = new Test(NrichTextBox);
+            Utility.Init(NrichTextBox, ErrorLog, suggestionBox);
+            KeyEventsHandler.Init(NrichTextBox, ErrorLog, suggestionBox);
             TokenGenerator.InitBox(NrichTextBox);
             Highlighter.Init(NrichTextBox);
             SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
@@ -144,91 +146,7 @@ namespace NotePad_Metro
       
         private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    Line line = new Line();
-                    line.lineNumber = (NrichTextBox.Lines.Length - 1);
-                    line.text = NrichTextBox.Lines[NrichTextBox.Lines.Length - 2];
-                  
-                    if (TokenGenerator.IsVariableDecleration(line.text))
-                    {
-                        line.type = "variable";
-                    }
-
-                    else if (TokenGenerator.IsMethodDecleration(line.text))
-                    {
-                        line.type = "method";
-                    }
-
-                    else if (TokenGenerator.IsClassDecleration(line.text))
-                    {
-                        line.type = "class";
-                    }
-
-                    else
-                    {
-                        line.type = "none";
-                    }
-
-                    lineList.Add(line);
-
-                    NrichTextBox.SelectionStart = NrichTextBox.TextLength;
-                }
-                catch (Exception ex)
-                {
-
-                }
-                
-            }
-
-            if (e.KeyCode == Keys.Delete)
-            {
-                foreach (Line line in lineList)
-               {
-                   if (line.type=="variable")
-                   {
-                       if (!Refactorer.CheckVariableDecleration(line.text))
-                       {
-                           Line errorLine= new Line();
-                           errorLine.lineNumber = line.lineNumber;
-                           errorLine.text = "// variable decleration error!";
-                           errorLine.type = "variable";
-                           errorLines.Add(errorLine);
-                       }
-                   }
-
-                   else if (line.type=="method")
-                   {
-                       if (!Refactorer.CheckMethodDecleration(line.text))
-                       {
-                           Line errorLine= new Line();
-                           errorLine.lineNumber = line.lineNumber;
-                           errorLine.text = "// method decleration error!";
-                           errorLine.type = "method";
-                           errorLines.Add(errorLine);
-                       }
-                   }
-
-                   else if (line.type=="class")
-                   {
-                       if (!Refactorer.CheckClassDecleration(line.text))
-                       {
-                           Line errorLine = new Line();
-                           errorLine.lineNumber = line.lineNumber;
-                           errorLine.text = "// Class decleration error!";
-                           errorLine.type = "class";
-                           errorLines.Add(errorLine);
-                       } 
-                   }
-               }
-
-                foreach (Line line in errorLines)
-                {
-                   ErrorLog.AppendText(line.lineNumber + " -> " + line.text+"\r\n");  
-                }
-            }
+            KeyEventsHandler.EditorKeyHandler(e.KeyCode);
         }
 
         private void generateDocumentationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,94 +183,46 @@ namespace NotePad_Metro
 
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
-            //TokenGenerator.MarkClass();
-            //TokenGenerator.MarkAccessModifiers();
-            //TokenGenerator.MarkDatatypes();
             try
             {
-                string[] words = NrichTextBox.Text.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                Highlighter.Highlight(words[words.Length - 1]);
+                string[] words = NrichTextBox.Text.Split(new[] { ' ', '\n', ';' });
+                string lastWord = words[words.Length - 1];
+                Color color = Highlighter.TextColor(lastWord);
+                Utility.AddColorToText(lastWord, color);
             }
-            catch (Exception)
-            {
-
-            }
+            catch (Exception) { }
             
             SuggestionPosition();
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode.ToString())
-            {
-                case ("ControlKey"):
-                    try
-                    {
-                        suggestionBox.Focus();
-                        suggestionBox.SelectedIndex = 0;
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        break;
-                    }
-            }
+            
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             try
             {
-                switch (e.KeyChar)
-                {
-                    case ((char)Keys.Back):
-                        if (temp != null)
-                        {
-                            temp = temp.Remove(temp.Length - 1);
-                        }
-                        break;
+                suggestionBox.Items.Clear();
+                Utility.AddToTemp(e.KeyChar);
+                SuggestionProvider.GetSuggestion(Utility.GetTemp());
 
-                    case ((char)Keys.Space):
-                        temp = null;
-                        suggestionBox.Items.Clear();
-                        break;
-
-                    default:
-                        suggestionBox.Items.Clear();
-                        temp += e.KeyChar.ToString();
-                        SuggestionProvider.GetSuggestion(temp);
-                        break;
-                }
-                    
             }
 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
+            catch (Exception) { }
         }
 
         private void suggestionBox_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case (Keys.Enter):
-                    SuggestionProvider.InsertSuggestion(temp);
-                    NrichTextBox.Focus();
-                    break;
-                case (Keys.Escape):
-                    suggestionBox.Items.Clear();
-                    NrichTextBox.Focus();
-                    break;
-            }
+            KeyEventsHandler.SuggestionKeyHandler(e.KeyCode);
         }
 
         public void SuggestionPosition()
         {
-            this.NrichTextBox.Focus();
-            // this.suggestionBox.Location = (Point)this.NrichTextBox.SelectionStart;
-            this.suggestionBox.Location = new Point(this.NrichTextBox.SelectionStart+30, this.suggestionBox.Location.Y);
+            //this.NrichTextBox.Focus();
+            //// this.suggestionBox.Location = (Point)this.NrichTextBox.SelectionStart;
+            //this.suggestionBox.Location = new Point(this.NrichTextBox.SelectionStart+30, this.suggestionBox.Location.Y);
         }
     }
 }

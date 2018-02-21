@@ -38,39 +38,37 @@ namespace NotePad_Metro
 
         private void Check()
         {
-            for (int i = 0; i < arrayList.Count; i++)
-            {
-                AccessModifier = Logical.TokenGenerator.IsAccessModifier(arrayList[i]);
-                DataType = Logical.TokenGenerator.IsDataType(arrayList[i]);
-                ReturnType = Logical.TokenGenerator.IsReturnType(arrayList[i]);
+            //for (int i = 0; i < arrayList.Count; i++)
+            //{
+            //    AccessModifier = Logical.TokenGenerator.IsAccessModifier(arrayList[i]);
+            //    DataType = Logical.TokenGenerator.IsDataType(arrayList[i]);
+            //    ReturnType = Logical.TokenGenerator.IsReturnType(arrayList[i]);
 
-                if (AccessModifier)
-                {
+            //    if (AccessModifier)
+            //    {
 
-                }
+            //    }
 
-                if (DataType || ReturnType)
-                {
-                    if (arrayList[i + 2] == ";" || arrayList[i + 2] == "=")
-                    {
-                        arrayList[i + 1] += " <"+CheckVariableName(arrayList[i + 1])+"> ";
-                    }
+            //    if (DataType || ReturnType)
+            //    {
+            //        if (arrayList[i + 2] == ";" || arrayList[i + 2] == "=")
+            //        {
+            //            arrayList[i + 1] += " <"+CheckVariableName(arrayList[i + 1])+"> ";
+            //        }
 
-                    else if (arrayList[i + 2] == "(" || arrayList[i + 2] == "()")
-                    {
-                        arrayList[i + 1] += " <" + CheckMethodName(arrayList[i + 1]) + "> ";
-                    }
-                }
-            }
+            //        else if (arrayList[i + 2] == "(" || arrayList[i + 2] == "()")
+            //        {
+            //            arrayList[i + 1] += " <" + CheckMethodName(arrayList[i + 1]) + "> ";
+            //        }
+            //    }
+            //}
 
-            this.Show();
+            //this.Show();
         }
 
         private void Show()
         {
             this.CheckParenthesis();
-            Logical.TokenGenerator.MarkDatatypes();
-            Logical.TokenGenerator.MarkAccessModifiers();
         }
 
         private void CheckParenthesis()

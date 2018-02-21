@@ -45,10 +45,9 @@ namespace NotePad_Metro.Logical
             }
         }
 
-        public static void InsertSuggestion(string temp)
+        public static string GetItem()
         {
-            editor.Text=editor.Text.Remove(editor.Text.Length - temp.Length);
-            editor.AppendText(suggestionBox.SelectedItem.ToString());
+            return suggestionBox.SelectedItem.ToString();
         }
     }
 

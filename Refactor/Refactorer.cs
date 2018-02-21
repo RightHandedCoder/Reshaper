@@ -9,42 +9,40 @@ namespace NotePad_Metro.Refactor
 {
     class Refactorer
     {
-        public static bool CheckVariableDecleration(string text)
+        public static bool CheckConventions(Line line)
         {
-            Match match = Regex.Match(text, Lib_C_Sharp.Rule_VariableDecleration_CSharp);
+            int lineNo = line.lineNumber;
+            string lineText = line.text;
+            string lineType = line.type;
 
-            if (match.Success)
+            Match match;
+            string rule = @"";
+            bool result = false;
+
+            switch (lineType)
             {
-                return true;
+                case "variable":
+                    rule = Lib_C_Sharp.Rule_VariableDecleration_CSharp;
+                    break;
+                case "method":
+                    rule = Lib_C_Sharp.Rule_MethodDecleration_CSharp;
+                    break;
+                case "class":
+                    rule = Lib_C_Sharp.Rule_ClassDecleration_CSharp;
+                    break;
             }
 
-            else return false;
-
-        }
-
-        public static bool CheckMethodDecleration(string text)
-        {
-            Match match = Regex.Match(text, Lib_C_Sharp.Rule_MethodDecleration_CSharp);
-
-            if (match.Success)
+            try
             {
-                return true;
+                match = Regex.Match(lineText, rule);
+                result = match.Success == true ? true : false;
+            }
+            catch (Exception)
+            {
+                result = false;
             }
 
-            else return false;
-
-        }
-
-        public static bool CheckClassDecleration(string text)
-        {
-            Match match = Regex.Match(text, Lib_C_Sharp.Rule_ClassDecleration_CSharp);
-
-            if (match.Success)
-            {
-                return true;
-            }
-
-            else return false;
+            return result;
         }
 
         public static void FixVariableDecleration(List<Line> line, Line error)
@@ -95,10 +93,10 @@ namespace NotePad_Metro.Refactor
 
             foreach(string x in sp)
             {
-                if(!TokenGenerator.IsAccessModifier(x) && x != "class")
-                {
-                    return x;
-                }
+                //if(!TokenGenerator.IsAccessModifier(x) && x != "class")
+                //{
+                //    return x;
+                //}
             }
 
             return null;
@@ -110,10 +108,10 @@ namespace NotePad_Metro.Refactor
 
             foreach (string x in sp)
             {
-                if (!TokenGenerator.IsAccessModifier(x) && !TokenGenerator.IsDataType(x))
-                {
-                    return x;
-                }
+                //if (!TokenGenerator.IsAccessModifier(x) && !TokenGenerator.IsDataType(x))
+                //{
+                //    return x;
+                //}
             }
 
             return null;
@@ -125,19 +123,15 @@ namespace NotePad_Metro.Refactor
 
             foreach(string x in sp)
             {
-                if(!TokenGenerator.IsAccessModifier(x) && !TokenGenerator.IsReturnType(x))
-                {
-                    return x;
-                }
+                //if(!TokenGenerator.IsAccessModifier(x) && !TokenGenerator.IsReturnType(x))
+                //{
+                //    return x;
+                //}
             }
 
             return null;
         }
-
-        public static void InsertParenthesis()
-        {
-
-        }
+        
     }
 
 
