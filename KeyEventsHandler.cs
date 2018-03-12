@@ -62,7 +62,7 @@ namespace NotePad_Metro
         public static void EditorKeyHandler(char KeyChar)
         {
             switch (KeyChar)
-            { 
+            {
                 default:
                     break;
             }

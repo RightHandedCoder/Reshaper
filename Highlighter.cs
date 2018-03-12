@@ -1,7 +1,6 @@
 ﻿using NotePad_Metro.Logical;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,6 @@ namespace NotePad_Metro
         public static void Init(RichTextBox box)
         {
             editor = box;
-        }
-
-        public void ColorWords(BackgroundWorker worker, DoWorkEventArgs e)
-        {
-            
         }
 
         public static Color TextColor(string text)
