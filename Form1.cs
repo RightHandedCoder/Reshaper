@@ -191,7 +191,30 @@ namespace NotePad_Metro
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            if (e.KeyCode == Keys.K && e.Modifiers == Keys.Control)
+            {
+                //NrichTextBox.SelectedText
+                //Line CommentLine = new Line();
+                string s = "";
+                string[] lines = NrichTextBox.SelectedText.Split(new[] { '\n' }
+                                          , StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
+                {
+                    if (line.StartsWith("//"))
+                    {
+                        s += line.TrimStart('/') + "\n";
+                    }
+                    else
+                    {
+                        s += "//" + line + "\n";
+                    }
+
+
+                    //MessageBox.Show(s);
+                }
+                s = s.Remove(s.Length - 1);
+                NrichTextBox.SelectedText = NrichTextBox.SelectedText.Replace(NrichTextBox.SelectedText, s);
+            }
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
