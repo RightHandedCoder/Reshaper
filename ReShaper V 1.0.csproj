@@ -51,6 +51,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Highlighter.cs" />
     <Compile Include="KeyEventsHandler.cs" />
     <Compile Include="Library\Lib_C_Sharp.cs" />

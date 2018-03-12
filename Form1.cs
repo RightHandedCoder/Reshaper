@@ -29,6 +29,7 @@ namespace NotePad_Metro
             KeyEventsHandler.Init(NrichTextBox, ErrorLog, suggestionBox);
             TokenGenerator.InitBox(NrichTextBox);
             Highlighter.Init(NrichTextBox);
+            Helper.Init();
             SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
         }
 
@@ -149,11 +150,6 @@ namespace NotePad_Metro
             KeyEventsHandler.EditorKeyHandler(e.KeyCode);
         }
 
-        private void generateDocumentationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void fIXToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach(Line line in errorLines)
@@ -191,8 +187,6 @@ namespace NotePad_Metro
                 Utility.AddColorToText(lastWord, color);
             }
             catch (Exception) { }
-            
-            SuggestionPosition();
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -230,7 +224,14 @@ namespace NotePad_Metro
                 suggestionBox.Items.Clear();
                 Utility.AddToTemp(e.KeyChar);
                 SuggestionProvider.GetSuggestion(Utility.GetTemp());
-
+                string bracket = Helper.Check(e.KeyChar);
+                if (bracket != "")
+                {
+                    NrichTextBox.Text.Remove(NrichTextBox.Text.Length-2, 1);
+                    NrichTextBox.AppendText(bracket);
+                    e.Handled = true;
+                }
+                
             }
 
             catch (Exception) { }
@@ -239,13 +240,6 @@ namespace NotePad_Metro
         private void suggestionBox_KeyDown(object sender, KeyEventArgs e)
         {
             KeyEventsHandler.SuggestionKeyHandler(e.KeyCode);
-        }
-
-        public void SuggestionPosition()
-        {
-            //this.NrichTextBox.Focus();
-            //// this.suggestionBox.Location = (Point)this.NrichTextBox.SelectionStart;
-            //this.suggestionBox.Location = new Point(this.NrichTextBox.SelectionStart+30, this.suggestionBox.Location.Y);
         }
     }
 }
