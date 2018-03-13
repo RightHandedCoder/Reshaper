@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using NotePad_Metro.Refactor;
 using NotePad_Metro.Logical;
 using System.Drawing;
+using System.IO;
+using System.Diagnostics;
 
 namespace NotePad_Metro
 {
@@ -15,6 +17,7 @@ namespace NotePad_Metro
         List<Line> lineList = new List<Line>();
         List<Line> errorLines = new List<Line>();
         string temp;
+        string filepath;
 
 
         public Form1()
@@ -39,26 +42,24 @@ namespace NotePad_Metro
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
-            if (op.ShowDialog() == DialogResult.OK)
+            OpenFileDialog openfile = new OpenFileDialog();
+            if (openfile.ShowDialog() == DialogResult.OK)
             {
-                NrichTextBox.LoadFile(op.FileName, RichTextBoxStreamType.PlainText);
-                this.Text = op.FileName;
+                filepath = openfile.FileName;
             }
-            else { }
+            NrichTextBox.LoadFile(filepath, RichTextBoxStreamType.PlainText);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (save.ShowDialog() == DialogResult.OK)
+            try
             {
-                NrichTextBox.SaveFile(save.FileName, RichTextBoxStreamType.PlainText);
-                this.Text = save.FileName;
+                NrichTextBox.SaveFile(filepath, RichTextBoxStreamType.PlainText);
             }
-            else
-            { }
+            catch (Exception ex)
+            {
+                saveAsToolStripMenuItem_Click(sender, e);
+            }
 
         }
 
@@ -140,8 +141,24 @@ namespace NotePad_Metro
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            t.SplitText();
-            //t.Show();
+            Process process = new Process();
+            string s = filepath;
+            int x = s.LastIndexOf('\\');
+            s = s.Substring(0, x);
+            string command = "cd " + s;
+
+            StreamWriter sw = new StreamWriter("LastSuccessfulRun.bat");
+            sw.WriteLine("@echo off");
+            sw.WriteLine(command);
+            command = "csc " + filepath;
+            sw.WriteLine(command);
+            s = filepath;
+            s = s.Remove(s.Length - 3);
+            sw.WriteLine(s);
+            sw.WriteLine("@pause");
+            sw.Close();
+
+            Process.Start("LastSuccessfulRun.bat");
         }
       
         private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -197,7 +214,43 @@ namespace NotePad_Metro
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            if (e.KeyCode == Keys.K && e.Modifiers == Keys.Control)
+            {
+                //NrichTextBox.SelectedText
+                //Line CommentLine = new Line();
+                string s = "";
+                string[] lines = NrichTextBox.SelectedText.Split(new[] { '\n' }
+                                          , StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
+                {
+                    if (line.StartsWith("//"))
+                    {
+                        s += line.TrimStart('/') + "\n";
+                    }
+                    else
+                    {
+                        s += "//" + line + "\n";
+                    }
+
+
+                    //MessageBox.Show(s);
+                }
+                s = s.Remove(s.Length - 1);
+                NrichTextBox.SelectedText = NrichTextBox.SelectedText.Replace(NrichTextBox.SelectedText, s);
+            }
+            if(e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
+            {
+                saveToolStripMenuItem_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.O && e.Modifiers == Keys.Control)
+            {
+                openToolStripMenuItem_Click(sender, e);
+            }
+
+            if (e.KeyCode == Keys.R && e.Modifiers == Keys.Control)
+            {
+                runToolStripMenuItem_Click(sender, e);
+            }
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -230,6 +283,21 @@ namespace NotePad_Metro
             //this.NrichTextBox.Focus();
             //// this.suggestionBox.Location = (Point)this.NrichTextBox.SelectionStart;
             //this.suggestionBox.Location = new Point(this.NrichTextBox.SelectionStart+30, this.suggestionBox.Location.Y);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                using (Stream s = File.Open(savefile.FileName, FileMode.CreateNew))
+                using (System.IO.StreamWriter sw = new StreamWriter(s))
+                {
+                    sw.Write(NrichTextBox.Text);
+                    filepath = savefile.FileName;
+                }
+            }
+            NrichTextBox.SaveFile(filepath, RichTextBoxStreamType.PlainText);
         }
     }
 }
