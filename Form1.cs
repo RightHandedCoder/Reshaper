@@ -207,6 +207,13 @@ namespace NotePad_Metro
                 suggestionBox.Items.Clear();
                 Utility.AddToTemp(e.KeyChar);
                 SuggestionProvider.GetSuggestion(Utility.GetTemp());
+                string bracket = Helper.Check(e.KeyChar);
+                if (bracket != "")
+                {
+                    NrichTextBox.Text.Remove(NrichTextBox.Text.Length - 2, 1);
+                    NrichTextBox.AppendText(bracket);
+                    e.Handled = true;
+                }
 
             }
 
