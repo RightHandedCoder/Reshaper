@@ -46,9 +46,5 @@ namespace NotePad_Metro
             }
             else return "";
         }
-
-        private void ABC()
-        {
-        }
     }
 }
