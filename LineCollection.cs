@@ -10,7 +10,7 @@ namespace NotePad_Metro
 {
     class LineCollection
     {
-        private static List<Line> lineList = new List<Line>();
+        public static List<Line> lineList = new List<Line>();
 
         public static void Add(Line item)
         {

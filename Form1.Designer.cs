@@ -54,6 +54,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ErrorLog = new System.Windows.Forms.RichTextBox();
             this.suggestionBox = new System.Windows.Forms.ListBox();
+            this.BackgroundErrorTracer = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -150,7 +151,7 @@
             // 
             this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
@@ -158,7 +159,7 @@
             // 
             this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -166,7 +167,7 @@
             // 
             this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
@@ -174,7 +175,7 @@
             // 
             this.undoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -182,7 +183,7 @@
             // 
             this.redoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -291,6 +292,11 @@
             this.suggestionBox.TabIndex = 8;
             this.suggestionBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.suggestionBox_KeyDown);
             // 
+            // BackgroundErrorTracer
+            // 
+            this.BackgroundErrorTracer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundErrorTracer_DoWork);
+            this.BackgroundErrorTracer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundErrorTracer_RunWorkerCompleted);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -343,6 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem fIXToolStripMenuItem;
         private System.Windows.Forms.ListBox suggestionBox;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker BackgroundErrorTracer;
     }
 }
 

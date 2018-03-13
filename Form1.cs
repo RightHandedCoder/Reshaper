@@ -163,6 +163,15 @@ namespace NotePad_Metro
       
         private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
+            if(e.KeyCode==Keys.Enter)
+            {
+                if (BackgroundErrorTracer.IsBusy)
+                {
+                    BackgroundErrorTracer.CancelAsync();
+                }
+                else
+                    BackgroundErrorTracer.RunWorkerAsync();
+            }
             KeyEventsHandler.EditorKeyHandler(e.KeyCode);
         }
 
@@ -298,6 +307,83 @@ namespace NotePad_Metro
                 }
             }
             NrichTextBox.SaveFile(filepath, RichTextBoxStreamType.PlainText);
+        }
+
+        private void BackgroundErrorTracer_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            {
+                foreach (Line line in LineCollection.lineList)
+                {
+                    if (line.type == "variable")
+                    {
+                        if (!Refactorer.CheckVariableDecleration(line.text))
+                        {
+                            Line errorLine = new Line();
+                            errorLine.lineNumber = line.lineNumber;
+                            errorLine.text = "// variable decleration error!";
+                            errorLine.type = "variable";
+                            if (!errorLines.Contains(errorLine))
+                            {
+                                errorLines.Add(errorLine);
+                            }
+                        }
+                    }
+
+                    else if (line.type == "method")
+                    {
+                        if (!Refactorer.CheckMethodDecleration(line.text))
+                        {
+                            Line errorLine = new Line();
+                            errorLine.lineNumber = line.lineNumber;
+                            errorLine.text = "// method decleration error!";
+                            errorLine.type = "method";
+                            if (!errorLines.Contains(errorLine))
+                            {
+                                errorLines.Add(errorLine);
+                            }
+                        }
+                    }
+
+                    else if (line.type == "class")
+                    {
+                        if (!Refactorer.CheckClassDecleration(line.text))
+                        {
+                            Line errorLine = new Line();
+                            errorLine.lineNumber = line.lineNumber;
+                            errorLine.text = "// Class decleration error!";
+                            errorLine.type = "class";
+                            if (!errorLines.Contains(errorLine))
+                            {
+                                errorLines.Add(errorLine);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Line errorLine = new Line();
+                        errorLine.lineNumber = line.lineNumber;
+                        errorLine.text = "// Unidentified Line type";
+                        errorLine.type = "Unidentified";
+                        if (!errorLines.Contains(errorLine))
+                        {
+                            errorLines.Add(errorLine);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BackgroundErrorTracer_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+
+            if (ErrorLog.Text != null)
+            {
+                ErrorLog.Text = null;
+            }
+            foreach (Line line in errorLines)
+            {
+                ErrorLog.AppendText(line.lineNumber + " -> " + line.text + "\r\n");
+            }
         }
     }
 }

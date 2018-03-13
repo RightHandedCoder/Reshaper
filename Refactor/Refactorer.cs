@@ -9,6 +9,43 @@ namespace NotePad_Metro.Refactor
 {
     class Refactorer
     {
+        public static bool CheckVariableDecleration(string text)
+        {
+            Match match = Regex.Match(text, Lib_C_Sharp.Rule_VariableDecleration_CSharp);
+
+            if (match.Success)
+            {
+                return true;
+            }
+
+            else return false;
+
+        }
+
+        public static bool CheckMethodDecleration(string text)
+        {
+            Match match = Regex.Match(text, Lib_C_Sharp.Rule_MethodDecleration_CSharp);
+
+            if (match.Success)
+            {
+                return true;
+            }
+
+            else return false;
+
+        }
+
+        public static bool CheckClassDecleration(string text)
+        {
+            Match match = Regex.Match(text, Lib_C_Sharp.Rule_ClassDecleration_CSharp);
+
+            if (match.Success)
+            {
+                return true;
+            }
+
+            else return false;
+        }
         public static bool CheckConventions(Line line)
         {
             int lineNo = line.lineNumber;
