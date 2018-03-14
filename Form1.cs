@@ -226,7 +226,7 @@ namespace NotePad_Metro
                         while ((index = NrichTextBox.Text.IndexOf(word, (index + 1))) != -1)
                         {
                             NrichTextBox.Select(index, word.Length);
-                            NrichTextBox.SelectionColor = Color.Blue;
+                            NrichTextBox.SelectionColor = Coloring.GetColor(word);
                             NrichTextBox.Select(selectStart, 0);
                             NrichTextBox.SelectionColor = Color.Black;
                         }

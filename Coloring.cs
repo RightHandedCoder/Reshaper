@@ -29,7 +29,7 @@ namespace NotePad_Metro
             suggestions.Add("long", Color.Blue);
             suggestions.Add("object", Color.Blue);
             suggestions.Add("out", Color.Blue);
-            suggestions.Add("private", Color.Blue);
+            suggestions.Add("private", Color.Red);
             suggestions.Add("ref", Color.Blue);
             suggestions.Add("sealed", Color.Blue);
             suggestions.Add("sizeof", Color.Blue);
@@ -80,7 +80,7 @@ namespace NotePad_Metro
             suggestions.Add("new", Color.Blue);
             suggestions.Add("operator", Color.Blue);
             suggestions.Add("params", Color.Blue);
-            suggestions.Add("public", Color.Blue);
+            suggestions.Add("public", Color.Red);
             suggestions.Add("return", Color.Blue);
             suggestions.Add("set", Color.Blue);
             suggestions.Add("static", Color.Blue);
@@ -123,6 +123,11 @@ namespace NotePad_Metro
                 return true;
             }
             else return false;
+        }
+
+        public static Color GetColor(string word)
+        {
+            return suggestions[word];
         }
     }
 }
