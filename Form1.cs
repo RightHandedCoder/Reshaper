@@ -33,6 +33,7 @@ namespace NotePad_Metro
             TokenGenerator.InitBox(NrichTextBox);
             Highlighter.Init(NrichTextBox);
             SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
+            Coloring.InitColoring();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -211,10 +212,30 @@ namespace NotePad_Metro
         {
             try
             {
-                string[] words = NrichTextBox.Text.Split(new[] { ' ', '\n', ';' });
-                string lastWord = words[words.Length - 1];
-                Color color = Highlighter.TextColor(lastWord);
-                Utility.AddColorToText(lastWord, color);
+                //string[] words = NrichTextBox.Text.Split(new[] { ' ', '\n', ';' });
+                //string lastWord = words[words.Length - 1];
+                //Color color = Highlighter.TextColor(lastWord);
+                //Utility.AddColorToText(lastWord, color);
+                foreach (string word in NrichTextBox.Text.Split(' '))
+                {
+                    if (Coloring.InList(word))
+                    {
+                        int index = -1;
+                        int selectStart = NrichTextBox.SelectionStart;
+
+                        while ((index = NrichTextBox.Text.IndexOf(word, (index + 1))) != -1)
+                        {
+                            NrichTextBox.Select(index, word.Length);
+                            NrichTextBox.SelectionColor = Color.Blue;
+                            NrichTextBox.Select(selectStart, 0);
+                            NrichTextBox.SelectionColor = Color.Black;
+                        }
+
+                        
+
+                    }
+                }
+
             }
             catch (Exception) { }
             
@@ -311,7 +332,7 @@ namespace NotePad_Metro
 
         private void BackgroundErrorTracer_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            {
+            try {
                 foreach (Line line in LineCollection.lineList)
                 {
                     if (line.type == "variable")
@@ -370,6 +391,10 @@ namespace NotePad_Metro
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 

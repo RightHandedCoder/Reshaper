@@ -50,13 +50,14 @@ namespace NotePad_Metro
             try
             {
                 editor.Focus();
-                int startIndex = editor.Text.IndexOf(text);
-                int selectionLength = text.Length;
-                editor.SelectionStart = startIndex;
-                editor.SelectionLength = selectionLength;
-                editor.SelectionColor = color;
-                editor.SelectionStart = editor.TextLength;
-                editor.SelectionColor = Color.Black;
+                //int startIndex = editor.Text.IndexOf(text);
+                //int selectionLength = text.Length;
+                //editor.SelectionStart = startIndex;
+                //editor.SelectionLength = selectionLength;
+                //editor.SelectionColor = color;
+                //editor.SelectionStart = editor.TextLength;
+                //editor.SelectionColor = Color.Black;
+
             }
             catch (Exception) { }
         }
