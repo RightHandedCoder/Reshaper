@@ -58,6 +58,7 @@
     <Compile Include="KeyEventsHandler.cs" />
     <Compile Include="Library\Lib_C_Sharp.cs" />
     <Compile Include="LineCollection.cs" />
+    <Compile Include="LogFile.cs" />
     <Compile Include="Logical\LogicalStructs.cs" />
     <Compile Include="Logical\SuggestionProvider.cs" />
     <Compile Include="Logical\TokenGenerator.cs" />

@@ -11,8 +11,6 @@ namespace NotePad_Metro
 {
     public partial class Form1 : Form
     {
-        bool controlKeyPressed = false;
-        string[] arr = new string[1000];
         List<Line> lineList = new List<Line>();
         List<Line> errorLines = new List<Line>();
 
@@ -173,11 +171,11 @@ namespace NotePad_Metro
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (controlKeyPressed) {
+            if (KeyEventsHandler.controlKeyPressed) {
                 KeyEventsHandler.EditorMulitpleKeyPressHandler(e.KeyCode);
             }
-            
-            controlKeyPressed = e.Modifiers == Keys.Control;
+
+            KeyEventsHandler.controlKeyPressed = e.Modifiers == Keys.Control;
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)

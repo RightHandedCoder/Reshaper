@@ -11,6 +11,7 @@ namespace NotePad_Metro
 {
     class KeyEventsHandler
     {
+        public static bool controlKeyPressed;
         private static RichTextBox editor;
         private static RichTextBox errorLog;
         private static ListBox suggestionList;
@@ -20,6 +21,7 @@ namespace NotePad_Metro
             editor = ed;
             errorLog = er;
             suggestionList = sg;
+            controlKeyPressed = false;
         }
 
         public static void EditorKeyHandler(Keys keyCode)

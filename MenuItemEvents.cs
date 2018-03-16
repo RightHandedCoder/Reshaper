@@ -58,8 +58,12 @@ namespace NotePad_Metro
                     sw.Write(editor.Text);
                     filepath = savefile.FileName;
                 }
+                editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
             }
-            editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
+            else
+            {
+                return;
+            }
         }
 
         public static void Run()

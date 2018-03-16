@@ -20,8 +20,10 @@ namespace NotePad_Metro
             {
                 Application.Run(new Form1());
             }
-            catch (Exception) 
-            { }
+            catch (Exception ex) 
+            {
+                new LogFile().SaveToLogFile(ex.ToString());
+            }
         }
     }
 }
