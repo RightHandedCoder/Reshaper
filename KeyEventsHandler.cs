@@ -88,5 +88,24 @@ namespace NotePad_Metro
                     break;
             }
         }
+
+        public static void EditorMulitpleKeyPressHandler(Keys key)
+        {
+            switch (key)
+            {
+                case Keys.K:
+                    Utility.CommentCode();
+                    break;
+                case Keys.S:
+                    MenuItemEvents.SaveFile();
+                    break;
+                case Keys.O:
+                    MenuItemEvents.OpenFile();
+                    break;
+                case Keys.R:
+                    MenuItemEvents.Run();
+                    break;
+            }
+        }
     }
 }

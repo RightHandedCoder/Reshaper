@@ -45,23 +45,6 @@ namespace NotePad_Metro
             editor.AppendText(space);
         }
 
-        public static void AddColorToText(string text, Color color)
-        {
-            try
-            {
-                editor.Focus();
-                //int startIndex = editor.Text.IndexOf(text);
-                //int selectionLength = text.Length;
-                //editor.SelectionStart = startIndex;
-                //editor.SelectionLength = selectionLength;
-                //editor.SelectionColor = color;
-                //editor.SelectionStart = editor.TextLength;
-                //editor.SelectionColor = Color.Black;
-
-            }
-            catch (Exception) { }
-        }
-
         public static void AddNewLineObj()
         {
             try
@@ -127,6 +110,26 @@ namespace NotePad_Metro
         public static string GetTemp()
         {
             return temp;
+        }
+
+        public static void CommentCode()
+        {
+            string s = "";
+            string[] lines = editor.SelectedText.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("//"))
+                {
+                    s += line.TrimStart('/') + "\n";
+                }
+                else
+                {
+                    s += "//" + line + "\n";
+                }
+            }
+            s = s.Remove(s.Length - 1);
+            editor.SelectedText = editor.SelectedText.Replace(editor.SelectedText, s);
+
         }
 
     }

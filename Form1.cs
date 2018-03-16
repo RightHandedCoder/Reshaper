@@ -10,11 +10,11 @@ using System.Diagnostics;
 namespace NotePad_Metro
 {
     public partial class Form1 : Form
-    {   
+    {
+        bool controlKeyPressed = false;
         string[] arr = new string[1000];
         List<Line> lineList = new List<Line>();
         List<Line> errorLines = new List<Line>();
-        string filepath;
 
         public Form1()
         {
@@ -173,38 +173,11 @@ namespace NotePad_Metro
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.K && e.Modifiers == Keys.Control)
-            {
-                string s = "";
-                string[] lines = NrichTextBox.SelectedText.Split(new[] { '\n' }
-                                          , StringSplitOptions.RemoveEmptyEntries);
-                foreach (var line in lines)
-                {
-                    if (line.StartsWith("//"))
-                    {
-                        s += line.TrimStart('/') + "\n";
-                    }
-                    else
-                    {
-                        s += "//" + line + "\n";
-                    }
-                }
-                s = s.Remove(s.Length - 1);
-                NrichTextBox.SelectedText = NrichTextBox.SelectedText.Replace(NrichTextBox.SelectedText, s);
+            if (controlKeyPressed) {
+                KeyEventsHandler.EditorMulitpleKeyPressHandler(e.KeyCode);
             }
-            if(e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
-            {
-                saveToolStripMenuItem_Click(sender, e);
-            }
-            if (e.KeyCode == Keys.O && e.Modifiers == Keys.Control)
-            {
-                openToolStripMenuItem_Click(sender, e);
-            }
-
-            if (e.KeyCode == Keys.R && e.Modifiers == Keys.Control)
-            {
-                runToolStripMenuItem_Click(sender, e);
-            }
+            
+            controlKeyPressed = e.Modifiers == Keys.Control;
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
