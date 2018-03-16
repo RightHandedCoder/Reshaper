@@ -16,7 +16,6 @@ namespace NotePad_Metro
         string[] arr = new string[1000];
         List<Line> lineList = new List<Line>();
         List<Line> errorLines = new List<Line>();
-        string temp;
         string filepath;
 
 
@@ -33,7 +32,8 @@ namespace NotePad_Metro
             TokenGenerator.InitBox(NrichTextBox);
             Highlighter.Init(NrichTextBox);
             SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
-            Coloring.InitColoring();
+            Coloring.InitColoring(NrichTextBox);
+            Helper.Init();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,44 +210,13 @@ namespace NotePad_Metro
 
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                //string[] words = NrichTextBox.Text.Split(new[] { ' ', '\n', ';' });
-                //string lastWord = words[words.Length - 1];
-                //Color color = Highlighter.TextColor(lastWord);
-                //Utility.AddColorToText(lastWord, color);
-                foreach (string word in NrichTextBox.Text.Split(' '))
-                {
-                    if (Coloring.InList(word))
-                    {
-                        int index = -1;
-                        int selectStart = NrichTextBox.SelectionStart;
-
-                        while ((index = NrichTextBox.Text.IndexOf(word, (index + 1))) != -1)
-                        {
-                            NrichTextBox.Select(index, word.Length);
-                            NrichTextBox.SelectionColor = Coloring.GetColor(word);
-                            NrichTextBox.Select(selectStart, 0);
-                            NrichTextBox.SelectionColor = Color.Black;
-                        }
-
-                        
-
-                    }
-                }
-
-            }
-            catch (Exception) { }
-            
-            SuggestionPosition();
+            Coloring.DoColoring();
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.K && e.Modifiers == Keys.Control)
             {
-                //NrichTextBox.SelectedText
-                //Line CommentLine = new Line();
                 string s = "";
                 string[] lines = NrichTextBox.SelectedText.Split(new[] { '\n' }
                                           , StringSplitOptions.RemoveEmptyEntries);
@@ -261,9 +230,6 @@ namespace NotePad_Metro
                     {
                         s += "//" + line + "\n";
                     }
-
-
-                    //MessageBox.Show(s);
                 }
                 s = s.Remove(s.Length - 1);
                 NrichTextBox.SelectedText = NrichTextBox.SelectedText.Replace(NrichTextBox.SelectedText, s);
@@ -310,9 +276,7 @@ namespace NotePad_Metro
 
         public void SuggestionPosition()
         {
-            //this.NrichTextBox.Focus();
-            //// this.suggestionBox.Location = (Point)this.NrichTextBox.SelectionStart;
-            //this.suggestionBox.Location = new Point(this.NrichTextBox.SelectionStart+30, this.suggestionBox.Location.Y);
+
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)

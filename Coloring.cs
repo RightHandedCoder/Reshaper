@@ -4,15 +4,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace NotePad_Metro
 {
     class Coloring
     {
         private static Dictionary<string, Color> suggestions = new Dictionary<string, Color>();
+        private static RichTextBox editor;
 
-        public static void InitColoring()
+        public static void InitColoring(RichTextBox NRichTextBox)
         {
+            editor = NRichTextBox;
             suggestions.Add("abstract", Color.Blue);
             suggestions.Add("async", Color.Blue);
             suggestions.Add("break", Color.Blue);
@@ -128,6 +131,34 @@ namespace NotePad_Metro
         public static Color GetColor(string word)
         {
             return suggestions[word];
+        }
+
+        public static void DoColoring()
+        {
+            try
+            {
+                foreach (string word in editor.Text.Split())
+                {
+                    if (Coloring.InList(word))
+                    {
+                        int index = -1;
+                        int selectStart = editor.SelectionStart;
+
+                        while ((index = editor.Text.IndexOf(word, (index + 1))) != -1)
+                        {
+                            editor.Select(index, word.Length);
+                            editor.SelectionColor = Coloring.GetColor(word);
+                            editor.Select(selectStart, 0);
+                            editor.SelectionColor = Color.Black;
+                        }
+
+
+
+                    }
+                }
+
+            }
+            catch (Exception) { }
         }
     }
 }
