@@ -49,7 +49,6 @@
             this.foreColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateDocumentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fIXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ErrorLog = new System.Windows.Forms.RichTextBox();
@@ -227,7 +226,6 @@
             this.helpToolStripMenuItem.BackColor = System.Drawing.Color.Black;
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runToolStripMenuItem,
-            this.generateDocumentationToolStripMenuItem,
             this.fIXToolStripMenuItem});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.Turquoise;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -237,21 +235,14 @@
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
-            // 
-            // generateDocumentationToolStripMenuItem
-            // 
-            this.generateDocumentationToolStripMenuItem.Name = "generateDocumentationToolStripMenuItem";
-            this.generateDocumentationToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
-            this.generateDocumentationToolStripMenuItem.Text = "Generate Documentation";
-            this.generateDocumentationToolStripMenuItem.Click += new System.EventHandler(this.generateDocumentationToolStripMenuItem_Click);
             // 
             // fIXToolStripMenuItem
             // 
             this.fIXToolStripMenuItem.Name = "fIXToolStripMenuItem";
-            this.fIXToolStripMenuItem.Size = new System.Drawing.Size(273, 26);
+            this.fIXToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.fIXToolStripMenuItem.Text = "FIX";
             this.fIXToolStripMenuItem.Click += new System.EventHandler(this.fIXToolStripMenuItem_Click);
             // 
@@ -345,7 +336,6 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.RichTextBox ErrorLog;
-        private System.Windows.Forms.ToolStripMenuItem generateDocumentationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fIXToolStripMenuItem;
         private System.Windows.Forms.ListBox suggestionBox;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;

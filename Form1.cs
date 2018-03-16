@@ -10,14 +10,11 @@ using System.Diagnostics;
 namespace NotePad_Metro
 {
     public partial class Form1 : Form
-    {
-        Test t;
-        
+    {   
         string[] arr = new string[1000];
         List<Line> lineList = new List<Line>();
         List<Line> errorLines = new List<Line>();
         string filepath;
-
 
         public Form1()
         {
@@ -26,42 +23,22 @@ namespace NotePad_Metro
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            t = new Test(NrichTextBox);
-            Utility.Init(NrichTextBox, ErrorLog, suggestionBox);
-            KeyEventsHandler.Init(NrichTextBox, ErrorLog, suggestionBox);
-            TokenGenerator.InitBox(NrichTextBox);
-            Highlighter.Init(NrichTextBox);
-            SuggestionProvider.InitSuggestionProvider(new List<string>(), suggestionBox, NrichTextBox);
-            Coloring.InitColoring(NrichTextBox);
-            Helper.Init();
+            Initializer.Init(NrichTextBox, ErrorLog, suggestionBox);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NrichTextBox.Clear();
+            MenuItemEvents.ClearEditor();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openfile = new OpenFileDialog();
-            if (openfile.ShowDialog() == DialogResult.OK)
-            {
-                filepath = openfile.FileName;
-            }
-            NrichTextBox.LoadFile(filepath, RichTextBoxStreamType.PlainText);
+            MenuItemEvents.OpenFile();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                NrichTextBox.SaveFile(filepath, RichTextBoxStreamType.PlainText);
-            }
-            catch (Exception ex)
-            {
-                saveAsToolStripMenuItem_Click(sender, e);
-            }
-
+            MenuItemEvents.SaveFile();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,31 +46,37 @@ namespace NotePad_Metro
             Application.Exit();
         }
 
+        //dont need
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NrichTextBox.Cut();
         }
 
+        //dont need
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NrichTextBox.Copy();
         }
 
+        //dont need
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NrichTextBox.Paste();
         }
 
+        //dont need
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NrichTextBox.Undo();
         }
 
+        //dont need
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NrichTextBox.Redo();
         }
 
+        //dont need
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FontDialog ft = new FontDialog();
@@ -106,6 +89,7 @@ namespace NotePad_Metro
             
         }
 
+        //dont need
         private void backgroudColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog cr = new ColorDialog();
@@ -118,6 +102,7 @@ namespace NotePad_Metro
             { }
         }
 
+        //dont need
         private void foreColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog cr = new ColorDialog();
@@ -132,39 +117,18 @@ namespace NotePad_Metro
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            
+            MenuItemEvents.About();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process process = new Process();
-            string s = filepath;
-            int x = s.LastIndexOf('\\');
-            s = s.Substring(0, x);
-            string command = "cd " + s;
-
-            StreamWriter sw = new StreamWriter("LastSuccessfulRun.bat");
-            sw.WriteLine("@echo off");
-            sw.WriteLine(command);
-            command = "csc " + filepath;
-            sw.WriteLine(command);
-            s = filepath;
-            s = s.Remove(s.Length - 3);
-            sw.WriteLine(s);
-            sw.WriteLine("@pause");
-            sw.Close();
-
-            Process.Start("LastSuccessfulRun.bat");
+            MenuItemEvents.Run();
         }
       
         private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            KeyEventsHandler.EditorKeyHandler(e.KeyCode);
+            if (e.KeyCode==Keys.Enter)
             {
                 if (BackgroundErrorTracer.IsBusy)
                 {
@@ -172,13 +136,7 @@ namespace NotePad_Metro
                 }
                 else
                     BackgroundErrorTracer.RunWorkerAsync();
-            }
-            KeyEventsHandler.EditorKeyHandler(e.KeyCode);
-        }
-
-        private void generateDocumentationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            } 
         }
 
         private void fIXToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,24 +232,9 @@ namespace NotePad_Metro
             KeyEventsHandler.SuggestionKeyHandler(e.KeyCode);
         }
 
-        public void SuggestionPosition()
-        {
-
-        }
-
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog savefile = new SaveFileDialog();
-            if (savefile.ShowDialog() == DialogResult.OK)
-            {
-                using (Stream s = File.Open(savefile.FileName, FileMode.CreateNew))
-                using (System.IO.StreamWriter sw = new StreamWriter(s))
-                {
-                    sw.Write(NrichTextBox.Text);
-                    filepath = savefile.FileName;
-                }
-            }
-            NrichTextBox.SaveFile(filepath, RichTextBoxStreamType.PlainText);
+            MenuItemEvents.SaveFileAs();
         }
 
         private void BackgroundErrorTracer_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -341,17 +284,6 @@ namespace NotePad_Metro
                             {
                                 errorLines.Add(errorLine);
                             }
-                        }
-                    }
-                    else
-                    {
-                        Line errorLine = new Line();
-                        errorLine.lineNumber = line.lineNumber;
-                        errorLine.text = "// Unidentified Line type";
-                        errorLine.type = "Unidentified";
-                        if (!errorLines.Contains(errorLine))
-                        {
-                            errorLines.Add(errorLine);
                         }
                     }
                 }

@@ -54,12 +54,14 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Highlighter.cs" />
+    <Compile Include="Initializer.cs" />
     <Compile Include="KeyEventsHandler.cs" />
     <Compile Include="Library\Lib_C_Sharp.cs" />
     <Compile Include="LineCollection.cs" />
     <Compile Include="Logical\LogicalStructs.cs" />
     <Compile Include="Logical\SuggestionProvider.cs" />
     <Compile Include="Logical\TokenGenerator.cs" />
+    <Compile Include="MenuItemEvents.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Refactor\Refactorer.cs" />
