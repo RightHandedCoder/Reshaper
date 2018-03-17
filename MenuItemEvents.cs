@@ -59,8 +59,8 @@ namespace NotePad_Metro
                 {
                     sw.Write(editor.Text);
                     filepath = savefile.FileName;
+                    editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
                 }
-                editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
             }
             else
             {
@@ -71,23 +71,31 @@ namespace NotePad_Metro
         public static void Run()
         {
             string s = GetFilePathIfSaved();
-            Process process = new Process();
-            int x = s.LastIndexOf('\\');
-            s = s.Substring(0, x);
-            string command = "cd " + s;
+            if (s != null)
+            {
+                Process process = new Process();
+                int x = s.LastIndexOf('\\');
+                s = s.Substring(0, x);
+                string command = "cd " + s;
 
-            StreamWriter sw = new StreamWriter("LastSuccessfulRun.bat");
-            sw.WriteLine("@echo off");
-            sw.WriteLine(command);
-            command = "csc " + filepath;
-            sw.WriteLine(command);
-            s = filepath;
-            s = s.Remove(s.Length - 3);
-            sw.WriteLine(s);
-            sw.WriteLine("@pause");
-            sw.Close();
+                StreamWriter sw = new StreamWriter("LastSuccessfulRun.bat");
+                sw.WriteLine("@echo off");
+                sw.WriteLine(command);
+                command = "csc " + filepath;
+                sw.WriteLine(command);
+                s = filepath;
+                s = s.Remove(s.Length - 3);
+                sw.WriteLine(s);
+                sw.WriteLine("@pause");
+                sw.Close();
 
-            Process.Start("LastSuccessfulRun.bat");
+                Process.Start("LastSuccessfulRun.bat");
+            }
+
+            else
+            {
+                MessageBox.Show("Please Save File Before Run");
+            }
             
         }
 
@@ -101,9 +109,10 @@ namespace NotePad_Metro
             if (filepath == null)
             {
                 SaveFile();
+                return filepath;
             }
 
-            return filepath;
+            else return null;
         }
     }
 }
