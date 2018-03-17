@@ -15,11 +15,12 @@ namespace NotePad_Metro
         public LogFile()
         {
             this.fileName = "Log-" + DateTime.Now.ToString().Replace(':','.') + ".txt";
+            logDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\";
         }
 
         public void SaveToLogFile(string msg)
         {
-            logDirectory = @"C:\Users\Public\Documents\" + this.fileName;
+            logDirectory += this.fileName;
             using (StreamWriter file = new StreamWriter(logDirectory))
             {
                 file.WriteLine(msg);
