@@ -24,12 +24,11 @@ namespace NotePad_Metro
             controlKeyPressed = false;
         }
 
-        public static void EditorKeyHandler(Keys keyCode)
+        public static void EditorKeyHandler(KeyEventArgs e)
         {
-            switch (keyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Back:
-                    Utility.RemoveFromTemp();
                     break;
                 case Keys.Tab:
                     break;
@@ -39,7 +38,6 @@ namespace NotePad_Metro
                 case Keys.Escape:
                     break;
                 case Keys.Space:
-                    Utility.ClearTemp();
                     suggestionList.Items.Clear();
                     break;
                 case Keys.End:
@@ -53,8 +51,11 @@ namespace NotePad_Metro
                 case Keys.Right:
                     break;
                 case Keys.Down:
-                    suggestionList.Focus();
-                    suggestionList.SelectedIndex = 0;
+                    if (suggestionList.Items.Count > 0)
+                    {
+                        e.Handled = true;
+                        Utility.FocusSuggestionList();
+                    }
                     break;
                 default:
                     break;
@@ -70,21 +71,22 @@ namespace NotePad_Metro
             }
         }
 
-        public static void SuggestionKeyHandler(Keys keyCode)
+        public static void SuggestionKeyHandler(KeyEventArgs e)
         {
-            switch (keyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Enter:
                     string textToInsert = SuggestionProvider.GetItem();
-                    int indexToRemove = editor.Text.Length - Utility.GetTemp().Length;
+                    int indexToRemove = editor.Text.Length - Utility.GetLastWord().Length;
                     Utility.FocusEditor();
                     Utility.RemoveTextFromEditor(indexToRemove);
                     Utility.AppendWordToEditor(textToInsert);
                     Utility.AddSpaceAfterText();
+                    Utility.ClearSuggestionList();
                     break;
                 case Keys.Escape:
-                    editor.Focus();
-                    suggestionList.Items.Clear();
+                    Utility.ClearSuggestionList();
+                    Utility.FocusEditor();
                     break;
                 default:
                     break;

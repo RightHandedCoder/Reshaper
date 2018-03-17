@@ -6,6 +6,7 @@ using NotePad_Metro.Logical;
 using System.Drawing;
 using System.IO;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace NotePad_Metro
 {
@@ -122,31 +123,17 @@ namespace NotePad_Metro
         {
             MenuItemEvents.Run();
         }
-      
-        private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            KeyEventsHandler.EditorKeyHandler(e.KeyCode);
-            if (e.KeyCode==Keys.Enter)
-            {
-                if (BackgroundErrorTracer.IsBusy)
-                {
-                    BackgroundErrorTracer.CancelAsync();
-                }
-                else
-                    BackgroundErrorTracer.RunWorkerAsync();
-            } 
-        }
 
         private void fIXToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach(Line line in errorLines)
+            foreach (Line line in errorLines)
             {
-                if(line.type == "variable")
+                if (line.type == "variable")
                 {
                     Refactorer.FixVariableDecleration(lineList, line);
                 }
 
-                else if(line.type == "method")
+                else if (line.type == "method")
                 {
                     Refactorer.FixMethodDecleration(lineList, line);
                 }
@@ -158,15 +145,37 @@ namespace NotePad_Metro
             }
 
             NrichTextBox.Clear();
-            foreach(Line line in lineList)
+            foreach (Line line in lineList)
             {
-                NrichTextBox.AppendText(line.text+"\n");
+                NrichTextBox.AppendText(line.text + "\n");
             }
+        }
+
+        private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            KeyEventsHandler.EditorKeyHandler(e);
+            if (e.KeyCode==Keys.Enter)
+            {
+                if (BackgroundErrorTracer.IsBusy)
+                {
+                    BackgroundErrorTracer.CancelAsync();
+                }
+                else
+                    BackgroundErrorTracer.RunWorkerAsync();
+            } 
         }
 
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
             Coloring.DoColoring();
+            //if (BackgroundColoringHandler.IsBusy)
+            //{
+            //    BackgroundColoringHandler.CancelAsync();
+            //}
+            //else
+            //{
+            //    BackgroundColoringHandler.RunWorkerAsync();
+            //}
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -183,13 +192,13 @@ namespace NotePad_Metro
             try
             {
                 suggestionBox.Items.Clear();
-                Utility.AddToTemp(e.KeyChar);
-                SuggestionProvider.GetSuggestion(Utility.GetTemp());
+                SuggestionProvider.GetSuggestion(Utility.GetLastWord());
                 string bracket = Helper.Check(e.KeyChar);
                 if (bracket != "")
                 {
                     NrichTextBox.Text.Remove(NrichTextBox.Text.Length - 2, 1);
                     NrichTextBox.AppendText(bracket);
+                    NrichTextBox.SelectionStart = NrichTextBox.Text.Length - 2;
                     e.Handled = true;
                 }
 
@@ -200,7 +209,7 @@ namespace NotePad_Metro
 
         private void suggestionBox_KeyDown(object sender, KeyEventArgs e)
         {
-            KeyEventsHandler.SuggestionKeyHandler(e.KeyCode);
+            KeyEventsHandler.SuggestionKeyHandler(e);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,7 +217,12 @@ namespace NotePad_Metro
             MenuItemEvents.SaveFileAs();
         }
 
-        private void BackgroundErrorTracer_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void BackgroundColoringHandler_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
+        }
+
+        private void BackgroundErrorTracer_DoWork(object sender, DoWorkEventArgs e)
         {
             try {
                 foreach (Line line in LineCollection.lineList)
@@ -265,7 +279,7 @@ namespace NotePad_Metro
             }
         }
 
-        private void BackgroundErrorTracer_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void BackgroundErrorTracer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
             if (ErrorLog.Text != null)
@@ -276,6 +290,16 @@ namespace NotePad_Metro
             {
                 ErrorLog.AppendText(line.lineNumber + " -> " + line.text + "\r\n");
             }
+        }
+
+        private void BackgroundBracketHelper_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void BackgroundBracketHelper_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
         }
     }
 }

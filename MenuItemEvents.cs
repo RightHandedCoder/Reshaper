@@ -27,11 +27,13 @@ namespace NotePad_Metro
         public static void OpenFile()
         {
             OpenFileDialog openfile = new OpenFileDialog();
+
             if (openfile.ShowDialog() == DialogResult.OK)
             {
                 filepath = openfile.FileName;
+                editor.LoadFile(filepath, RichTextBoxStreamType.PlainText);
             }
-            editor.LoadFile(filepath, RichTextBoxStreamType.PlainText);
+            
         }
 
         public static void SaveFile()
@@ -68,8 +70,8 @@ namespace NotePad_Metro
 
         public static void Run()
         {
+            string s = GetFilePathIfSaved();
             Process process = new Process();
-            string s = filepath;
             int x = s.LastIndexOf('\\');
             s = s.Substring(0, x);
             string command = "cd " + s;
@@ -86,11 +88,22 @@ namespace NotePad_Metro
             sw.Close();
 
             Process.Start("LastSuccessfulRun.bat");
+            
         }
 
         public static void About()
         {
 
+        }
+
+        private static string GetFilePathIfSaved()
+        {
+            if (filepath == null)
+            {
+                SaveFile();
+            }
+
+            return filepath;
         }
     }
 }

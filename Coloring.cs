@@ -130,7 +130,12 @@ namespace NotePad_Metro
 
         public static Color GetColor(string word)
         {
-            return suggestions[word];
+            if (InList(word))
+            {
+                return suggestions[word];
+            }
+
+            else return Color.Black;
         }
 
         public static void DoColoring()
@@ -139,22 +144,12 @@ namespace NotePad_Metro
             {
                 foreach (string word in editor.Text.Split())
                 {
-                    if (Coloring.InList(word))
-                    {
-                        int index = -1;
-                        int selectStart = editor.SelectionStart;
-
-                        while ((index = editor.Text.IndexOf(word, (index + 1))) != -1)
-                        {
-                            editor.Select(index, word.Length);
-                            editor.SelectionColor = Coloring.GetColor(word);
-                            editor.Select(selectStart, 0);
-                            editor.SelectionColor = Color.Black;
-                        }
-
-
-
-                    }
+                    int index = editor.Text.LastIndexOf(word);
+                    int selectStart = editor.SelectionStart;
+                    editor.Select(index, word.Length);
+                    editor.SelectionColor = GetColor(word);
+                    editor.Select(selectStart, 0);
+                    editor.SelectionColor = Color.Black;
                 }
 
             }

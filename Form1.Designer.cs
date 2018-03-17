@@ -54,6 +54,8 @@
             this.ErrorLog = new System.Windows.Forms.RichTextBox();
             this.suggestionBox = new System.Windows.Forms.ListBox();
             this.BackgroundErrorTracer = new System.ComponentModel.BackgroundWorker();
+            this.BackgroundColoringHandler = new System.ComponentModel.BackgroundWorker();
+            this.BackgroundBracketHelper = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -288,6 +290,15 @@
             this.BackgroundErrorTracer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundErrorTracer_DoWork);
             this.BackgroundErrorTracer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundErrorTracer_RunWorkerCompleted);
             // 
+            //BackgroundColoringHandler
+            //
+            this.BackgroundColoringHandler.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundColoringHandler_DoWork);
+            //
+            //BackgroundBracketHelper
+            //
+            this.BackgroundBracketHelper.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundBracketHelper_DoWork);
+            this.BackgroundBracketHelper.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundBracketHelper_RunWorkerCompleted);
+            //
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -340,6 +351,8 @@
         private System.Windows.Forms.ListBox suggestionBox;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker BackgroundErrorTracer;
+        private System.ComponentModel.BackgroundWorker BackgroundColoringHandler;
+        private System.ComponentModel.BackgroundWorker BackgroundBracketHelper;
     }
 }
 

@@ -14,7 +14,6 @@ namespace NotePad_Metro
         private static RichTextBox editor;
         private static RichTextBox errorLog;
         private static ListBox suggestionList;
-        private static string temp;
 
         private static string space = " ";
 
@@ -92,24 +91,10 @@ namespace NotePad_Metro
             AppendToErrorLog(error);
         }
 
-        public static void AddToTemp(char c)
+        public static string GetLastWord()
         {
-            temp += c;
-        }
-
-        public static void RemoveFromTemp()
-        {
-            temp = temp.Remove(temp.Length - 1);
-        }
-
-        public static void ClearTemp()
-        {
-            temp = null;
-        }
-
-        public static string GetTemp()
-        {
-            return temp;
+            int index = editor.Text.LastIndexOf(" ") + 1;
+            return editor.Text.Substring(index);
         }
 
         public static void CommentCode()
@@ -129,7 +114,17 @@ namespace NotePad_Metro
             }
             s = s.Remove(s.Length - 1);
             editor.SelectedText = editor.SelectedText.Replace(editor.SelectedText, s);
+        }
 
+        public static void FocusSuggestionList()
+        {
+            suggestionList.Focus();
+            suggestionList.SelectedIndex = 0;
+        }
+
+        public static void ClearSuggestionList()
+        {
+            suggestionList.Items.Clear();
         }
 
     }

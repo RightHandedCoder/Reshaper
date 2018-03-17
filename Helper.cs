@@ -18,10 +18,10 @@ namespace NotePad_Metro
             openningBrackets.Add('[', "third");
             openningBrackets.Add('<', "angular");
 
-            closingBrackets.Add("first", "()");
-            closingBrackets.Add("second", "{}");
-            closingBrackets.Add("third", "[]");
-            closingBrackets.Add("angular", "<>");
+            closingBrackets.Add("first", "(  )");
+            closingBrackets.Add("second", "{  }");
+            closingBrackets.Add("third", "[  ]");
+            closingBrackets.Add("angular", "<  >");
         }
 
         public static string Check(char keyChar)
