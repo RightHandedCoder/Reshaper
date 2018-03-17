@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.NrichTextBox = new System.Windows.Forms.RichTextBox();
             this.numberLabel = new System.Windows.Forms.Label();
@@ -37,16 +38,6 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.designToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroudColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.foreColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fIXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +47,14 @@
             this.BackgroundErrorTracer = new System.ComponentModel.BackgroundWorker();
             this.BackgroundColoringHandler = new System.ComponentModel.BackgroundWorker();
             this.BackgroundBracketHelper = new System.ComponentModel.BackgroundWorker();
+            this.EditMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Copy = new System.Windows.Forms.ToolStripMenuItem();
+            this.Paste = new System.Windows.Forms.ToolStripMenuItem();
+            this.Cut = new System.Windows.Forms.ToolStripMenuItem();
+            this.Undo = new System.Windows.Forms.ToolStripMenuItem();
+            this.Redo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.EditMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // NrichTextBox
@@ -74,6 +72,7 @@
             this.NrichTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NrichTextBox_KeyDown);
             this.NrichTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NrichTextBox_KeyPress);
             this.NrichTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NrichTextBox_KeyUp);
+            this.NrichTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NrichTextBox_MouseDown);
             // 
             // numberLabel
             // 
@@ -135,94 +134,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cutToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
-            this.editToolStripMenuItem.ForeColor = System.Drawing.Color.Turquoise;
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(52, 25);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
-            this.cutToolStripMenuItem.Text = "Cut";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
-            this.copyToolStripMenuItem.Text = "Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
-            this.undoToolStripMenuItem.Text = "Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
-            this.redoToolStripMenuItem.Text = "Redo";
-            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
-            // 
-            // designToolStripMenuItem
-            // 
-            this.designToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fontToolStripMenuItem,
-            this.backgroudColorToolStripMenuItem,
-            this.foreColorToolStripMenuItem});
-            this.designToolStripMenuItem.ForeColor = System.Drawing.Color.Turquoise;
-            this.designToolStripMenuItem.Name = "designToolStripMenuItem";
-            this.designToolStripMenuItem.Size = new System.Drawing.Size(75, 25);
-            this.designToolStripMenuItem.Text = "Design";
-            // 
-            // fontToolStripMenuItem
-            // 
-            this.fontToolStripMenuItem.BackColor = System.Drawing.Color.Silver;
-            this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.fontToolStripMenuItem.Text = "Font";
-            this.fontToolStripMenuItem.Click += new System.EventHandler(this.fontToolStripMenuItem_Click);
-            // 
-            // backgroudColorToolStripMenuItem
-            // 
-            this.backgroudColorToolStripMenuItem.BackColor = System.Drawing.Color.Silver;
-            this.backgroudColorToolStripMenuItem.Name = "backgroudColorToolStripMenuItem";
-            this.backgroudColorToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.backgroudColorToolStripMenuItem.Text = "Backgroud Color";
-            this.backgroudColorToolStripMenuItem.Click += new System.EventHandler(this.backgroudColorToolStripMenuItem_Click);
-            // 
-            // foreColorToolStripMenuItem
-            // 
-            this.foreColorToolStripMenuItem.BackColor = System.Drawing.Color.Silver;
-            this.foreColorToolStripMenuItem.Name = "foreColorToolStripMenuItem";
-            this.foreColorToolStripMenuItem.Size = new System.Drawing.Size(207, 26);
-            this.foreColorToolStripMenuItem.Text = "Fore Color";
-            this.foreColorToolStripMenuItem.Click += new System.EventHandler(this.foreColorToolStripMenuItem_Click);
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.BackColor = System.Drawing.Color.Black;
@@ -254,8 +165,6 @@
             this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.designToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(4, 5);
@@ -290,15 +199,61 @@
             this.BackgroundErrorTracer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundErrorTracer_DoWork);
             this.BackgroundErrorTracer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundErrorTracer_RunWorkerCompleted);
             // 
-            //BackgroundColoringHandler
-            //
+            // BackgroundColoringHandler
+            // 
             this.BackgroundColoringHandler.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundColoringHandler_DoWork);
-            //
-            //BackgroundBracketHelper
-            //
+            // 
+            // BackgroundBracketHelper
+            // 
             this.BackgroundBracketHelper.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundBracketHelper_DoWork);
             this.BackgroundBracketHelper.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundBracketHelper_RunWorkerCompleted);
-            //
+            // 
+            // EditMenu
+            // 
+            this.EditMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Copy,
+            this.Paste,
+            this.Cut,
+            this.Undo,
+            this.Redo});
+            this.EditMenu.Name = "EditMenu";
+            this.EditMenu.Size = new System.Drawing.Size(109, 114);
+            // 
+            // Copy
+            // 
+            this.Copy.Name = "Copy";
+            this.Copy.Size = new System.Drawing.Size(108, 22);
+            this.Copy.Text = "COPY";
+            this.Copy.Click += new System.EventHandler(this.Copy_Click);
+            // 
+            // Paste
+            // 
+            this.Paste.Name = "Paste";
+            this.Paste.Size = new System.Drawing.Size(108, 22);
+            this.Paste.Text = "PASTE";
+            this.Paste.Click += new System.EventHandler(this.Paste_Click);
+            // 
+            // Cut
+            // 
+            this.Cut.Name = "Cut";
+            this.Cut.Size = new System.Drawing.Size(108, 22);
+            this.Cut.Text = "CUT";
+            this.Cut.Click += new System.EventHandler(this.Cut_Click);
+            // 
+            // Undo
+            // 
+            this.Undo.Name = "Undo";
+            this.Undo.Size = new System.Drawing.Size(108, 22);
+            this.Undo.Text = "UNDO";
+            this.Undo.Click += new System.EventHandler(this.Undo_Click);
+            // 
+            // Redo
+            // 
+            this.Redo.Name = "Redo";
+            this.Redo.Size = new System.Drawing.Size(108, 22);
+            this.Redo.Text = "REDO";
+            this.Redo.Click += new System.EventHandler(this.Redo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -319,6 +274,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.EditMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,16 +289,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem designToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem backgroudColorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem foreColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -353,6 +299,12 @@
         private System.ComponentModel.BackgroundWorker BackgroundErrorTracer;
         private System.ComponentModel.BackgroundWorker BackgroundColoringHandler;
         private System.ComponentModel.BackgroundWorker BackgroundBracketHelper;
+        private System.Windows.Forms.ContextMenuStrip EditMenu;
+        private System.Windows.Forms.ToolStripMenuItem Copy;
+        private System.Windows.Forms.ToolStripMenuItem Paste;
+        private System.Windows.Forms.ToolStripMenuItem Cut;
+        private System.Windows.Forms.ToolStripMenuItem Undo;
+        private System.Windows.Forms.ToolStripMenuItem Redo;
     }
 }
 

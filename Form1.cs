@@ -45,75 +45,6 @@ namespace NotePad_Metro
             Application.Exit();
         }
 
-        //dont need
-        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NrichTextBox.Cut();
-        }
-
-        //dont need
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NrichTextBox.Copy();
-        }
-
-        //dont need
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NrichTextBox.Paste();
-        }
-
-        //dont need
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NrichTextBox.Undo();
-        }
-
-        //dont need
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NrichTextBox.Redo();
-        }
-
-        //dont need
-        private void fontToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FontDialog ft = new FontDialog();
-            ft.Font = NrichTextBox.SelectionFont;
-            if (ft.ShowDialog() == DialogResult.OK)
-            {
-                NrichTextBox.SelectionFont = ft.Font;
-            }
-            else { }
-            
-        }
-
-        //dont need
-        private void backgroudColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorDialog cr = new ColorDialog();
-            if (cr.ShowDialog() == DialogResult.OK)
-            {
-                NrichTextBox.BackColor = cr.Color;
-
-            }
-            else
-            { }
-        }
-
-        //dont need
-        private void foreColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorDialog cr = new ColorDialog();
-            if (cr.ShowDialog() == DialogResult.OK)
-            {
-                NrichTextBox.ForeColor = cr.Color;
-
-            }
-            else
-            { }
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MenuItemEvents.About();
@@ -300,6 +231,40 @@ namespace NotePad_Metro
         private void BackgroundBracketHelper_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
+        
+        }
+
+        private void NrichTextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.EditMenu.Show(e.Location);
+            }
+        }
+
+        private void Copy_Click(object sender, EventArgs e)
+        {
+            NrichTextBox.Copy();
+        }
+
+        private void Paste_Click(object sender, EventArgs e)
+        {
+            NrichTextBox.Paste();
+        }
+
+        private void Cut_Click(object sender, EventArgs e)
+        {
+            NrichTextBox.Cut();
+        }
+
+        private void Undo_Click(object sender, EventArgs e)
+        {
+            NrichTextBox.Undo();
+        }
+
+        private void Redo_Click(object sender, EventArgs e)
+        {
+            NrichTextBox.Redo();
         }
     }
 }
