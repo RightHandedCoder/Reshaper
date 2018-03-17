@@ -107,14 +107,6 @@ namespace NotePad_Metro
             {
                 AddLineNumbers();
             }
-            //if (BackgroundColoringHandler.IsBusy)
-            //{
-            //    BackgroundColoringHandler.CancelAsync();
-            //}
-            //else
-            //{
-            //    BackgroundColoringHandler.RunWorkerAsync();
-            //}
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
