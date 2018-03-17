@@ -112,8 +112,11 @@ namespace NotePad_Metro
                     s += "//" + line + "\n";
                 }
             }
-            s = s.Remove(s.Length - 1);
-            editor.SelectedText = editor.SelectedText.Replace(editor.SelectedText, s);
+            if (s.Length>0)
+            {
+                s = s.Remove(s.Length - 1);
+                editor.SelectedText = editor.SelectedText.Replace(editor.SelectedText, s);
+            }
         }
 
         public static void FocusSuggestionList()
