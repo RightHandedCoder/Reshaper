@@ -27,6 +27,7 @@ namespace NotePad_Metro
         public static void OpenFile()
         {
             OpenFileDialog openfile = new OpenFileDialog();
+            openfile.Filter = ("C# Source File |*.cs");
 
             if (openfile.ShowDialog() == DialogResult.OK)
             {
@@ -52,6 +53,7 @@ namespace NotePad_Metro
         public static void SaveFileAs()
         {
             SaveFileDialog savefile = new SaveFileDialog();
+            savefile.Filter = ("C# Source File |*.cs");
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 using (Stream s = File.Open(savefile.FileName, FileMode.CreateNew))
