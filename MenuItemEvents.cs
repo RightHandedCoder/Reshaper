@@ -59,8 +59,8 @@ namespace NotePad_Metro
                 {
                     sw.Write(editor.Text);
                     filepath = savefile.FileName;
-                    editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
                 }
+                editor.SaveFile(filepath, RichTextBoxStreamType.PlainText);
             }
             else
             {
@@ -94,7 +94,7 @@ namespace NotePad_Metro
 
             else
             {
-                MessageBox.Show("Please Save File Before Run");
+                MessageBox.Show("You need to save the file to run");
             }
             
         }
@@ -106,13 +106,7 @@ namespace NotePad_Metro
 
         private static string GetFilePathIfSaved()
         {
-            if (filepath == null)
-            {
-                SaveFile();
-                return filepath;
-            }
-
-            else return null;
+            return filepath;
         }
     }
 }
