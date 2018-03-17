@@ -23,6 +23,8 @@ namespace NotePad_Metro
             catch (Exception ex) 
             {
                 new LogFile().SaveToLogFile(ex.ToString());
+                Application.Restart();
+                Environment.Exit(0);
             }
         }
     }
