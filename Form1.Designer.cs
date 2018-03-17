@@ -53,6 +53,7 @@
             this.Cut = new System.Windows.Forms.ToolStripMenuItem();
             this.Undo = new System.Windows.Forms.ToolStripMenuItem();
             this.Redo = new System.Windows.Forms.ToolStripMenuItem();
+            this.LineNumberTextBox = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.EditMenu.SuspendLayout();
             this.SuspendLayout();
@@ -61,13 +62,15 @@
             // 
             this.NrichTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.NrichTextBox.ForeColor = System.Drawing.Color.Black;
-            this.NrichTextBox.Location = new System.Drawing.Point(26, 34);
+            this.NrichTextBox.Location = new System.Drawing.Point(50, 34);
             this.NrichTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.NrichTextBox.Name = "NrichTextBox";
             this.NrichTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.NrichTextBox.Size = new System.Drawing.Size(867, 306);
             this.NrichTextBox.TabIndex = 3;
             this.NrichTextBox.Text = "";
+            this.NrichTextBox.SelectionChanged += new System.EventHandler(this.NrichTextBox_SelectionChanged);
+            this.NrichTextBox.VScroll += new System.EventHandler(this.NrichTextBox_VScroll);
             this.NrichTextBox.TextChanged += new System.EventHandler(this.NrichTextBox_TextChanged);
             this.NrichTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NrichTextBox_KeyDown);
             this.NrichTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NrichTextBox_KeyPress);
@@ -148,14 +151,14 @@
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(110, 26);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
             // fIXToolStripMenuItem
             // 
             this.fIXToolStripMenuItem.Name = "fIXToolStripMenuItem";
-            this.fIXToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.fIXToolStripMenuItem.Size = new System.Drawing.Size(110, 26);
             this.fIXToolStripMenuItem.Text = "FIX";
             this.fIXToolStripMenuItem.Click += new System.EventHandler(this.fIXToolStripMenuItem_Click);
             // 
@@ -171,16 +174,17 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 2, 2);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(889, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(913, 29);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // ErrorLog
             // 
-            this.ErrorLog.Location = new System.Drawing.Point(26, 343);
+            this.ErrorLog.BackColor = System.Drawing.SystemColors.Window;
+            this.ErrorLog.Location = new System.Drawing.Point(4, 343);
             this.ErrorLog.Name = "ErrorLog";
             this.ErrorLog.ReadOnly = true;
-            this.ErrorLog.Size = new System.Drawing.Size(705, 151);
+            this.ErrorLog.Size = new System.Drawing.Size(751, 164);
             this.ErrorLog.TabIndex = 6;
             this.ErrorLog.Text = "";
             // 
@@ -188,9 +192,9 @@
             // 
             this.suggestionBox.FormattingEnabled = true;
             this.suggestionBox.ItemHeight = 20;
-            this.suggestionBox.Location = new System.Drawing.Point(737, 343);
+            this.suggestionBox.Location = new System.Drawing.Point(764, 343);
             this.suggestionBox.Name = "suggestionBox";
-            this.suggestionBox.Size = new System.Drawing.Size(156, 144);
+            this.suggestionBox.Size = new System.Drawing.Size(153, 164);
             this.suggestionBox.TabIndex = 8;
             this.suggestionBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.suggestionBox_KeyDown);
             // 
@@ -254,12 +258,25 @@
             this.Redo.Text = "REDO";
             this.Redo.Click += new System.EventHandler(this.Redo_Click);
             // 
+            // LineNumberTextBox
+            // 
+            this.LineNumberTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LineNumberTextBox.Cursor = System.Windows.Forms.Cursors.PanNE;
+            this.LineNumberTextBox.Location = new System.Drawing.Point(4, 37);
+            this.LineNumberTextBox.Name = "LineNumberTextBox";
+            this.LineNumberTextBox.ReadOnly = true;
+            this.LineNumberTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.LineNumberTextBox.Size = new System.Drawing.Size(46, 303);
+            this.LineNumberTextBox.TabIndex = 9;
+            this.LineNumberTextBox.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(897, 502);
+            this.ClientSize = new System.Drawing.Size(921, 515);
+            this.Controls.Add(this.LineNumberTextBox);
             this.Controls.Add(this.suggestionBox);
             this.Controls.Add(this.ErrorLog);
             this.Controls.Add(this.numberLabel);
@@ -272,6 +289,7 @@
             this.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Text = "NotePad";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.EditMenu.ResumeLayout(false);
@@ -305,6 +323,7 @@
         private System.Windows.Forms.ToolStripMenuItem Cut;
         private System.Windows.Forms.ToolStripMenuItem Undo;
         private System.Windows.Forms.ToolStripMenuItem Redo;
+        private System.Windows.Forms.RichTextBox LineNumberTextBox;
     }
 }
 

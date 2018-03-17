@@ -23,6 +23,9 @@ namespace NotePad_Metro
         private void Form1_Load(object sender, EventArgs e)
         {
             Initializer.Init(NrichTextBox, ErrorLog, suggestionBox);
+            LineNumberTextBox.Font = NrichTextBox.Font;
+            NrichTextBox.Select();
+            AddLineNumbers();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,6 +102,11 @@ namespace NotePad_Metro
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
             Coloring.DoColoring();
+
+            if (NrichTextBox.Text == "")
+            {
+                AddLineNumbers();
+            }
             //if (BackgroundColoringHandler.IsBusy)
             //{
             //    BackgroundColoringHandler.CancelAsync();
@@ -240,6 +248,9 @@ namespace NotePad_Metro
             {
                 this.EditMenu.Show(e.Location);
             }
+
+            NrichTextBox.Select();
+            LineNumberTextBox.DeselectAll();
         }
 
         private void Copy_Click(object sender, EventArgs e)
@@ -266,5 +277,56 @@ namespace NotePad_Metro
         {
             NrichTextBox.Redo();
         }
+
+
+
+
+        //// for line numbers dont touch
+        public void AddLineNumbers()
+        {   
+            Point pt = new Point(0, 0);    
+            int First_Index = NrichTextBox.GetCharIndexFromPosition(pt);
+            int First_Line = NrichTextBox.GetLineFromCharIndex(First_Index);
+              
+            pt.X = ClientRectangle.Width;
+            pt.Y = ClientRectangle.Height;
+                
+            int Last_Index = NrichTextBox.GetCharIndexFromPosition(pt);
+            int Last_Line = NrichTextBox.GetLineFromCharIndex(Last_Index);
+               
+            LineNumberTextBox.SelectionAlignment = HorizontalAlignment.Center;
+                
+            LineNumberTextBox.Text = "";
+               
+            for (int i = First_Line; i <= Last_Line+1; i++)
+            {
+                LineNumberTextBox.Text += i + 1 + "\n";
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            AddLineNumbers();
+        }
+
+        private void NrichTextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            Point pt = NrichTextBox.GetPositionFromCharIndex(NrichTextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbers();
+            }
+        }
+
+        private void NrichTextBox_VScroll(object sender, EventArgs e)
+        {
+            Point pt = NrichTextBox.GetPositionFromCharIndex(NrichTextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbers();
+            }
+        }
+
+
     }
 }
