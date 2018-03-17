@@ -76,22 +76,18 @@ namespace NotePad_Metro
             if (s != null)
             {
                 Process process = new Process();
-                int x = s.LastIndexOf('\\');
-                s = s.Substring(0, x);
-                string command = "cd " + s;
 
-                StreamWriter sw = new StreamWriter("LastSuccessfulRun.bat");
+                string batFileLocation = GetFilePath(s) + @"LastSuccessfulRun.bat";
+                StreamWriter sw = new StreamWriter(batFileLocation);
                 sw.WriteLine("@echo off");
+                string command = "csc " + MakePathForBat(GetFileNameWithExt(filepath));
                 sw.WriteLine(command);
-                command = "csc " + filepath;
+                command = MakePathForBat(GetFileName(filepath));
                 sw.WriteLine(command);
-                s = filepath;
-                s = s.Remove(s.Length - 3);
-                sw.WriteLine(s);
                 sw.WriteLine("@pause");
                 sw.Close();
 
-                Process.Start("LastSuccessfulRun.bat");
+                Process.Start(batFileLocation);
             }
 
             else
@@ -109,6 +105,32 @@ namespace NotePad_Metro
         private static string GetFilePathIfSaved()
         {
             return filepath;
+        }
+
+        private static string GetFilePath(string path)
+        {
+            string filename = GetFileNameWithExt(path);
+            int indexOfFileName = path.LastIndexOf(filename);
+            return path.Remove(indexOfFileName);
+        }
+
+        private static string GetFileNameWithExt(string path)
+        {
+            int indexOfLastDash = path.LastIndexOf(@"\");
+            return path.Substring(indexOfLastDash + 1);
+        }
+
+        private static string GetFileName(string path)
+        {
+            string ext = ".cs";
+            string withExt = GetFileNameWithExt(path);
+            int indexOfExt = withExt.IndexOf(ext);
+            return withExt.Remove(indexOfExt);
+        }
+
+        private static string MakePathForBat(string path)
+        {
+            return "\"" + path + "\""; 
         }
     }
 }
