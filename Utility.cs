@@ -93,8 +93,6 @@ namespace NotePad_Metro
 
         public static string GetLastWord()
         {
-            //int index = editor.Text.LastIndexOf(" ")+1;
-            //return editor.Text.Substring(index-1);
             if (editor.Text.LastIndexOf("\n") < editor.Text.LastIndexOf(' '))
             {
                 return editor.Text.TrimEnd().Substring(editor.Text.TrimEnd().LastIndexOf(' ')).Trim();
@@ -134,6 +132,11 @@ namespace NotePad_Metro
         public static void ClearSuggestionList()
         {
             suggestionList.Items.Clear();
+        }
+
+        public static void AddTabToEditor()
+        {
+            editor.AppendText("    ");
         }
 
     }

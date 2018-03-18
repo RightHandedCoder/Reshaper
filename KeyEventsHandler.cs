@@ -31,6 +31,9 @@ namespace NotePad_Metro
                 case Keys.Back:
                     break;
                 case Keys.Tab:
+                    e.Handled = true;
+                    Utility.FocusEditor();
+                    Utility.AddTabToEditor();
                     break;
                 case Keys.Enter:
                     Utility.AddNewLineObj();
