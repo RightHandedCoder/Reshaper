@@ -87,8 +87,10 @@ namespace NotePad_Metro
 
         private void NrichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            KeyEventsHandler.EditorKeyHandler(e);
+            suggestionBox.Items.Clear();
             SuggestionProvider.GetSuggestion(Utility.GetLastWord());
+            KeyEventsHandler.EditorKeyHandler(e);
+            
             if (e.KeyCode==Keys.Enter)
             {
                 if (BackgroundErrorTracer.IsBusy)
@@ -111,7 +113,10 @@ namespace NotePad_Metro
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
+        {   if (e.KeyCode == Keys.Down && suggestionBox.Items.Count > 0)
+            {
+                e.Handled = true;
+            }
             if (KeyEventsHandler.controlKeyPressed) {
                 KeyEventsHandler.EditorMulitpleKeyPressHandler(e.KeyCode);
             }
@@ -123,8 +128,6 @@ namespace NotePad_Metro
         {
             try
             {
-                suggestionBox.Items.Clear();
-                //SuggestionProvider.GetSuggestion(Utility.GetLastWord());
                 string bracket = Helper.Check(e.KeyChar);
                 if (bracket != "")
                 {

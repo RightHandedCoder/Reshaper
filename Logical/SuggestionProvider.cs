@@ -25,7 +25,7 @@ namespace NotePad_Metro.Logical
 
         public static void GetSuggestion(string key)
         {
-            if (keywordList.Any(str => str.Contains(key)))
+            if (keywordList.Any(str => str.Contains(key.Trim())))
             {
                 foreach (string s in keywordList)
                 {

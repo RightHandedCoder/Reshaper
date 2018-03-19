@@ -58,6 +58,7 @@ namespace NotePad_Metro
                     {
                         e.Handled = true;
                         Utility.FocusSuggestionList();
+                        suggestionList.SelectedIndex = 0;
                     }
                     break;
                 default:
@@ -80,10 +81,9 @@ namespace NotePad_Metro
             {
                 case Keys.Enter:
                     string textToInsert = SuggestionProvider.GetItem();
-                    int indexToRemove = editor.Text.Length - Utility.GetLastWord().Length;
                     Utility.FocusEditor();
-                    Utility.RemoveTextFromEditor(indexToRemove);
-                    Utility.AppendWordToEditor(textToInsert);
+                    int lastWordLength = Utility.GetLastWord().Length;
+                    Utility.InsertWordToCurrentEditorPosition(textToInsert.Substring(lastWordLength));
                     Utility.AddSpaceAfterText();
                     Utility.ClearSuggestionList();
                     break;

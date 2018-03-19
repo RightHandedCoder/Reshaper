@@ -154,6 +154,14 @@ namespace NotePad_Metro
                     editor.Select(selectStart, 0);
                     editor.SelectionColor = Color.Black;
                 }
+                //int currentIndex = editor.SelectionStart;
+                //string word = Utility.GetLastWord();
+                //int startIndex = currentIndex - word.Length;
+                //Color color = GetColor(word);
+                //editor.Select(startIndex, word.Length);
+                //editor.SelectionColor = color;
+                //editor.SelectionStart = currentIndex + word.Length;
+                //Console.WriteLine(word);
 
             }
             catch (Exception) { }

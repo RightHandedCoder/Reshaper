@@ -29,6 +29,13 @@ namespace NotePad_Metro
             editor.Focus();
         }
 
+        public static void InsertWordToCurrentEditorPosition(string word)
+        {
+            int currentIndex = editor.SelectionStart;
+            editor.Text = editor.Text.Insert(currentIndex, word);
+            editor.SelectionStart = currentIndex + word.Length;
+        }
+
         public static void AppendWordToEditor(string word)
         {
             editor.AppendText(word);
