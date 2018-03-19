@@ -146,15 +146,6 @@ namespace NotePad_Metro
         {
             try
             {
-                //foreach (string word in editor.Text.Split())
-                //{
-                //    int index = editor.Text.LastIndexOf(word);
-                //    int selectStart = editor.SelectionStart;
-                //    editor.Select(index, word.Length);
-                //    editor.SelectionColor = GetColor(word);
-                //    editor.Select(selectStart, 0);
-                //    editor.SelectionColor = Color.Black;
-                //}
 
                 string lastWord = Utility.GetLastWord();
                 editor.Select(editor.SelectionStart - lastWord.Length, lastWord.Length);
@@ -173,23 +164,28 @@ namespace NotePad_Metro
             {
                 foreach (string word in editor.Text.Split())
                 {
-                    int index = editor.Text.LastIndexOf(word);
-                    int selectStart = editor.SelectionStart;
-                    editor.Select(index, word.Length);
-                    editor.SelectionColor = GetColor(word);
-                    editor.Select(selectStart, 0);
-                    editor.SelectionColor = Color.Black;
+                    //int index = editor.Text.LastIndexOf(word);
+                    //int selectStart = editor.SelectionStart;
+                    //editor.Select(index, word.Length);
+                    //editor.SelectionColor = GetColor(word);
+                    //editor.Select(selectStart, 0);
+                    //editor.SelectionColor = Color.Black;
+                    if (editor.Text.Contains(word))
+                    {
+                        int index = -1;
+                        int selectStart = editor.SelectionStart;
+
+                        while ((index = editor.Text.IndexOf(word, (index + 1))) != -1)
+                        {
+                            editor.Select((index + 0), word.Length);
+                            editor.SelectionColor = Coloring.GetColor(word);
+                            editor.Select(selectStart, 0);
+                            editor.SelectionColor = Color.Black;
+                        }
+                    }
                 }
                 counter++;
-                //int currentIndex = editor.SelectionStart;
-                //string word = Utility.GetLastWord();
-                //int startIndex = currentIndex - word.Length;
-                //Color color = GetColor(word);
-                //editor.Select(startIndex, word.Length);
-                //editor.SelectionColor = color;
-                //editor.SelectionStart = currentIndex + word.Length;
-                //Console.WriteLine(word);
-
+                editor.SelectionStart = editor.Text.Length;
             }
             catch (Exception) { }
         }

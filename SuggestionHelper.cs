@@ -8,7 +8,7 @@ namespace NotePad_Metro
 {
     public class SuggestionHelper
     {
-        public List<string> suggestionList = new List<string>();
+        public  List<string> suggestionList = new List<string>();
         public SuggestionHelper()
         {
             this.suggestionList.Add("abstract");
