@@ -71,7 +71,7 @@ namespace NotePad_Metro
                 LineCollection.Add(new Line() { lineNumber = lineNo, text = lineText, type = lineType });
             }
             catch (Exception) { }
-            
+
         }
 
         public static Line GetLastLine()
@@ -81,7 +81,7 @@ namespace NotePad_Metro
 
         public static void AppendToErrorLog(Error error)
         {
-            errorLog.AppendText("On Line: "+error.lineNumber+" Error Type: "+error.errorType+"\n");
+            errorLog.AppendText("On Line: " + error.lineNumber + " Error Type: " + error.errorType + "\n");
         }
 
         public static void GenerateError(Line line)
@@ -136,7 +136,11 @@ namespace NotePad_Metro
 
         public static void AddTabToEditor()
         {
-            editor.AppendText("    ");
+            string tab = "\t";
+            int currentSelection = editor.SelectionStart;
+            editor.Text = editor.Text.Insert(editor.SelectionStart, tab);
+            editor.SelectionStart = currentSelection + tab.Length;
+
         }
 
     }
