@@ -93,12 +93,16 @@ namespace NotePad_Metro
 
         public static string GetLastWord()
         {
-            if (editor.Text.LastIndexOf("\n") < editor.Text.LastIndexOf(' '))
+            int wordEndPosition = editor.SelectionStart;
+            int currentPosition = wordEndPosition;
+
+            while (currentPosition > 0 && editor.Text[currentPosition - 1] != ' ' && editor.Text[currentPosition - 1] != '\n')
             {
-                return editor.Text.TrimEnd().Substring(editor.Text.TrimEnd().LastIndexOf(' ')).Trim();
+                currentPosition--;
             }
-            else
-                return editor.Text.TrimEnd().Substring(editor.Text.TrimEnd().LastIndexOf("\n")).Trim();
+
+            string word = editor.Text.Substring(currentPosition, wordEndPosition - currentPosition);
+            return word;
         }
 
         public static void CommentCode()
