@@ -60,6 +60,9 @@
             // 
             // NrichTextBox
             // 
+            this.NrichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NrichTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.NrichTextBox.ForeColor = System.Drawing.Color.Black;
             this.NrichTextBox.Location = new System.Drawing.Point(50, 34);
@@ -180,6 +183,8 @@
             // 
             // ErrorLog
             // 
+            this.ErrorLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ErrorLog.BackColor = System.Drawing.SystemColors.Window;
             this.ErrorLog.Location = new System.Drawing.Point(4, 343);
             this.ErrorLog.Name = "ErrorLog";
@@ -191,6 +196,7 @@
             // 
             // suggestionBox
             // 
+            this.suggestionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.suggestionBox.FormattingEnabled = true;
             this.suggestionBox.ItemHeight = 20;
             this.suggestionBox.Location = new System.Drawing.Point(764, 343);
@@ -262,6 +268,8 @@
             // 
             // LineNumberTextBox
             // 
+            this.LineNumberTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.LineNumberTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LineNumberTextBox.Cursor = System.Windows.Forms.Cursors.PanNE;
             this.LineNumberTextBox.Location = new System.Drawing.Point(4, 37);
