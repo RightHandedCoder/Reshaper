@@ -164,28 +164,14 @@ namespace NotePad_Metro
             {
                 foreach (string word in editor.Text.Split())
                 {
-                    //int index = editor.Text.LastIndexOf(word);
-                    //int selectStart = editor.SelectionStart;
-                    //editor.Select(index, word.Length);
-                    //editor.SelectionColor = GetColor(word);
-                    //editor.Select(selectStart, 0);
-                    //editor.SelectionColor = Color.Black;
-                    if (editor.Text.Contains(word))
-                    {
-                        int index = -1;
-                        int selectStart = editor.SelectionStart;
-
-                        while ((index = editor.Text.IndexOf(word, (index + 1))) != -1)
-                        {
-                            editor.Select((index + 0), word.Length);
-                            editor.SelectionColor = Coloring.GetColor(word);
-                            editor.Select(selectStart, 0);
-                            editor.SelectionColor = Color.Black;
-                        }
-                    }
+                    int index = editor.Text.LastIndexOf(word);
+                    int selectStart = editor.SelectionStart;
+                    editor.Select(index, word.Length);
+                    editor.SelectionColor = GetColor(word);
+                    editor.Select(selectStart, 0);
+                    editor.SelectionColor = Color.Black;
                 }
                 counter++;
-                editor.SelectionStart = editor.Text.Length;
             }
             catch (Exception) { }
         }
