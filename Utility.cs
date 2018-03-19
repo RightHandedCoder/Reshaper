@@ -154,5 +154,22 @@ namespace NotePad_Metro
 
         }
 
+        public static void AppendText(RichTextBox box, Color color, string text)
+        {
+            int start = box.SelectionStart;
+            //box.AppendText(text);
+            box.Select(editor.SelectionStart, 0);
+            Clipboard.SetText(text);
+            box.Paste();
+            int end = start + text.Length;
+
+
+            box.Select(start, end - start);
+            {
+                box.SelectionColor = color;
+            }
+            box.SelectionLength = 0; // clear
+        }
+
     }
 }

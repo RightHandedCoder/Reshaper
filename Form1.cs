@@ -35,6 +35,7 @@ namespace NotePad_Metro
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Coloring.counter = 0;
             MenuItemEvents.OpenFile();
         }
 
@@ -104,6 +105,10 @@ namespace NotePad_Metro
 
         private void NrichTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (Coloring.counter == 0)
+            {
+                Coloring.DoFirstColoring();
+            }
             Coloring.DoColoring();
 
             if (NrichTextBox.Text == "")

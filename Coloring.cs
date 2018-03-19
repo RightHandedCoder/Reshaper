@@ -12,6 +12,7 @@ namespace NotePad_Metro
     {
         private static Dictionary<string, Color> suggestions = new Dictionary<string, Color>();
         private static RichTextBox editor;
+        public static int counter = 1;
         
 
         public static void InitColoring(RichTextBox NRichTextBox)
@@ -145,6 +146,31 @@ namespace NotePad_Metro
         {
             try
             {
+                //foreach (string word in editor.Text.Split())
+                //{
+                //    int index = editor.Text.LastIndexOf(word);
+                //    int selectStart = editor.SelectionStart;
+                //    editor.Select(index, word.Length);
+                //    editor.SelectionColor = GetColor(word);
+                //    editor.Select(selectStart, 0);
+                //    editor.SelectionColor = Color.Black;
+                //}
+
+                string lastWord = Utility.GetLastWord();
+                editor.Select(editor.SelectionStart - lastWord.Length, lastWord.Length);
+                editor.SelectionColor = GetColor(lastWord);
+                editor.SelectionStart = editor.SelectionStart + lastWord.Length;
+                editor.Select(editor.SelectionStart, 0);
+                editor.ForeColor = Color.Black;
+
+            }
+            catch (Exception) { }
+        }
+
+        public static void DoFirstColoring()
+        {
+            try
+            {
                 foreach (string word in editor.Text.Split())
                 {
                     int index = editor.Text.LastIndexOf(word);
@@ -154,6 +180,7 @@ namespace NotePad_Metro
                     editor.Select(selectStart, 0);
                     editor.SelectionColor = Color.Black;
                 }
+                counter++;
                 //int currentIndex = editor.SelectionStart;
                 //string word = Utility.GetLastWord();
                 //int startIndex = currentIndex - word.Length;

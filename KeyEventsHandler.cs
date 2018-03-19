@@ -2,6 +2,7 @@
 using NotePad_Metro.Refactor;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,10 +82,16 @@ namespace NotePad_Metro
             {
                 case Keys.Enter:
                     string textToInsert = SuggestionProvider.GetItem();
-                    Utility.FocusEditor();
                     int lastWordLength = Utility.GetLastWord().Length;
-                    Utility.InsertWordToCurrentEditorPosition(textToInsert.Substring(lastWordLength));
+                    string textToAppend = textToInsert.Substring(lastWordLength);
+                    int select = editor.SelectionStart;
+                    Utility.AppendText(editor, Coloring.GetColor(textToInsert), textToAppend);
+                    editor.SelectionStart = select + textToAppend.Length;
+                    Coloring.DoColoring();
+                    Utility.AppendText(editor, Color.Black, " ");
+                    editor.SelectionStart = editor.SelectionStart + 1;
                     Utility.ClearSuggestionList();
+                    Utility.FocusEditor();
                     break;
                 case Keys.Escape:
                     Utility.ClearSuggestionList();
