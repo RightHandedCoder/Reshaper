@@ -84,7 +84,6 @@ namespace NotePad_Metro
                     Utility.FocusEditor();
                     int lastWordLength = Utility.GetLastWord().Length;
                     Utility.InsertWordToCurrentEditorPosition(textToInsert.Substring(lastWordLength));
-                    Utility.AddSpaceAfterText();
                     Utility.ClearSuggestionList();
                     break;
                 case Keys.Escape:
