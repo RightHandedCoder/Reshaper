@@ -80,7 +80,10 @@ namespace NotePad_Metro
                 string batFileLocation = GetFilePath(s) + @"LastSuccessfulRun.bat";
                 StreamWriter sw = new StreamWriter(batFileLocation);
                 sw.WriteLine("@echo off");
-                string command = "csc " + MakePathForBat(GetFileNameWithExt(filepath));
+                string fileFolder = filepath.Remove(filepath.LastIndexOf('\\'));
+                string command = "cd " + fileFolder;
+                sw.WriteLine(command);
+                command = "csc " + MakePathForBat(GetFileNameWithExt(filepath));
                 sw.WriteLine(command);
                 command = MakePathForBat(GetFileName(filepath));
                 sw.WriteLine(command);

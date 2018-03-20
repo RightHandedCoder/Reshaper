@@ -127,6 +127,13 @@ namespace NotePad_Metro
             }
 
             KeyEventsHandler.controlKeyPressed = e.Modifiers == Keys.Control;
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                int select = NrichTextBox.SelectionStart;
+                Utility.AppendText(this.NrichTextBox,Color.Black,Helper.tabs);
+                NrichTextBox.SelectionStart = select + Helper.tabs.Length;
+            }
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
