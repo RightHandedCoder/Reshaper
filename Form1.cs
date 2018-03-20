@@ -118,7 +118,7 @@ namespace NotePad_Metro
         }
 
         private void NrichTextBox_KeyDown(object sender, KeyEventArgs e)
-        {   if (e.KeyCode == Keys.Down && suggestionBox.Items.Count > 0)
+         {   if (e.KeyCode == Keys.Down && suggestionBox.Items.Count > 0)
             {
                 e.Handled = true;
             }
@@ -128,12 +128,24 @@ namespace NotePad_Metro
 
             KeyEventsHandler.controlKeyPressed = e.Modifiers == Keys.Control;
 
-            if (e.KeyCode == Keys.Enter)
-            {
-                int select = NrichTextBox.SelectionStart;
-                Utility.AppendText(this.NrichTextBox,Color.Black,Helper.tabs);
-                NrichTextBox.SelectionStart = select + Helper.tabs.Length;
-            }
+            //if (e.KeyCode == Keys.Enter)
+            //{
+            //    int select = NrichTextBox.SelectionStart;
+            //    Utility.AppendText(NrichTextBox, Color.Black, "\n");
+            //    NrichTextBox.SelectionStart = NrichTextBox.SelectionStart + 1;
+            //    for (int i = 0; i < Helper.tabs; i++)
+            //    {
+            //        Utility.AppendText(NrichTextBox, Color.Black, " ");
+            //        NrichTextBox.SelectionStart = NrichTextBox.SelectionStart + 1;
+            //        Utility.AppendText(NrichTextBox, Color.Black, " ");
+            //        NrichTextBox.SelectionStart = NrichTextBox.SelectionStart + 1;
+            //        Utility.AppendText(NrichTextBox, Color.Black, " ");
+            //        NrichTextBox.SelectionStart = NrichTextBox.SelectionStart + 1;
+            //    }
+            //    //Utility.AppendText(NrichTextBox, Color.Black, "\n");
+            //    //NrichTextBox.SelectionStart = NrichTextBox.SelectionStart - 1;
+            //    //NrichTextBox.SelectionStart = select + Helper.tabs.Length;
+            //}
         }
 
         private void NrichTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -143,9 +155,10 @@ namespace NotePad_Metro
                 string bracket = Helper.Check(e.KeyChar);
                 if (bracket != "")
                 {
-                    NrichTextBox.Text.Remove(NrichTextBox.Text.Length - 2, 1);
-                    NrichTextBox.AppendText(bracket);
-                    NrichTextBox.SelectionStart = NrichTextBox.Text.Length - 2;
+                    NrichTextBox.Text.Remove(NrichTextBox.SelectionStart - 2, 1);
+                    int select = NrichTextBox.SelectionStart;
+                    Utility.AppendText(NrichTextBox,Color.Black,bracket);
+                    NrichTextBox.SelectionStart = select+bracket.Length-2;
                     e.Handled = true;
                 }
 

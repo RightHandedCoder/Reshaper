@@ -10,8 +10,7 @@ namespace NotePad_Metro
     {
         private static Dictionary<char, string> openningBrackets = new Dictionary<char, string>();
         private static Dictionary<string, string> closingBrackets = new Dictionary<string, string>();
-        private static Stack<char> brackets = new Stack<char>();
-        public static string tabs = "";
+        public static int tabs = 0;
 
         public static void Init()
         {
@@ -33,16 +32,9 @@ namespace NotePad_Metro
             if (openningBrackets.ContainsKey(keyChar))
             {
                 string type = openningBrackets[keyChar];
-                if (keyChar == '{')
-                    brackets.Push('{');
-                else if(keyChar=='}' && brackets.Count!=0)
+                if(keyChar=='{')
                 {
-                    brackets.Pop();
-                }
-
-                for(int i=0;i<brackets.Count;i++)
-                {
-                    tabs += "   ";
+                    tabs++;
                 }
                 toInsert = BracketHelper(type);
             }
