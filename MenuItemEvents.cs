@@ -86,6 +86,7 @@ namespace NotePad_Metro
                 command = "csc " + MakePathForBat(GetFileNameWithExt(filepath));
                 sw.WriteLine(command);
                 command = MakePathForBat(GetFileName(filepath));
+                sw.WriteLine("cls");
                 sw.WriteLine(command);
                 sw.WriteLine("@pause");
                 sw.Close();
